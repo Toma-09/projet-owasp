@@ -1,11 +1,14 @@
 :root {
-    font-size: 24px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    font-family: 'Open Sans', sans-serif;
+    /*font-family:d ;*/
   
+    /* Variables CSS*/
+
     --nav-bckg-color: #24252a;
     --main-color: #0088a9;
     --text-primary: #b6b6b6;
-    --text-secondary: #ececec;
+    --text-secondary: #c9c4c4;
     --bg-primary: #23232e;
     --bg-secondary: #141418;
     --transition-speed: 600ms;
@@ -18,21 +21,25 @@
   }
   
   li, a, button {
-    color: white;
+    color: #F0F1F2;
     text-decoration: none;
   }
   
   main {
     margin-left: 5rem;
     padding: 1rem;
+    background-color: #F0F1F2;
   }
 
 /* Navbar du côté */
 
   .navbar {
     position: fixed;
-    background-color: var(--bg-primary);
-    transition: width 600ms ease;
+    top:2.5rem;
+    height: 100vh;
+    width: 5.5rem;
+    background-color: var(--nav-bckg-color);
+    transition: width 300ms ease;
     overflow: scroll;
   }
   
@@ -50,14 +57,10 @@
     width: 100%;
   }
   
-  .nav-item:last-child {
-    margin-top: auto;
-  }
-  
   .nav-link {
     display: flex;
     align-items: center;
-    height: 5rem;
+    height: 3rem;
     color: var(--text-primary);
     text-decoration: none;
     filter: grayscale(100%) opacity(0.7);
@@ -69,23 +72,63 @@
     background: var(--bg-secondary);
     color: var(--text-secondary);
   }
+
+  .navbar:hover {
+    width:20rem;
+  }
   
   .link-text {
     display: none;
-    margin-left: 1rem;
+    margin-left: 0rem;
+  }
+
+  .nav-link svg {
+    min-width: 2rem;
+    margin: 0 1.5rem;
+  }
+
+  .navbar:hover .link-text {
+    display: block;
+  }
+
+  .fa {
+    color: #a0cecb; 
+    transition: var(--transition-speed);
+  }
+
+  .logo {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom:1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    font-size: 1.7rem;
+    letter-spacing: 0.1ch;
+    width: 100%;
+  }
+
+  .logo svg {
+    transform: rotate(0deg);
+    transition: transform var(--transition-speed);
   }
 
   .navbar:hover .logo svg {
     transform: rotate(-180deg);
+    align-items: center;
   }
 
 /* CSS navbar principale */
   
   nav {
     display: flex;
-    height: 2.2rem;
+    height: 2.5rem;
     background-color: var(--nav-bckg-color);
     z-index: 100000000;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
   }
   
   .nav_links {
@@ -101,6 +144,7 @@
   .nav_links li {
     display: inline-block;
     padding: 0px 20px;
+    
   }
   
   .nav_links li a, .sidenav li a {
@@ -111,7 +155,7 @@
     color: var(--main-color);   
   }
 
-.dropdown {
+  .dropdown {
     position: relative;
     display: inline-block;
   }
@@ -131,17 +175,53 @@
   }
 
   .container {
-      border:solid red 5px;
-      margin-left:8rem;
-      margin-top:2.2rem;
-      margin-bottom:3rem;
-      margin-right:3rem;
-      background-color:darkgrey;
-      flex-direction: row / row-reverse / column / column-reverse;
+    border-radius: 15px;
+    margin-left:1.7rem;
+    margin-top:3.3rem;
+    margin-bottom:1rem;
+    margin-right:1rem;
+    background-color:darkgrey;
+    flex-direction: row / row-reverse / column / column-reverse;
+    text-align: center;
+    filter: grayscale(0%) opacity(1);
   }
 
+  .container-accueil{
+    border-radius: 15px;
+    margin-left:1rem;
+    margin-top:3.5rem;
+    margin-bottom:1rem;
+    margin-right:1rem;
+    background-color:darkgrey;
+    flex-direction: row / row-reverse / column / column-reverse;
+    text-align: center;
+  }
+
+  .navbar:hover .container {
+    filter: grayscale(0%) opacity(0.4);
+  }
+
+  .container-inside {
+    margin-left:1.5rem;
+    margin-top:3rem;
+    margin-bottom:1.5rem;
+    margin-right:1.5rem;
+    flex-direction: row / row-reverse / column / column-reverse;
+    text-align:justify;
+  }
+
+  .container-adaptive {
+    border-radius: 10px;
+    margin:auto;
+    background-color:darkgrey;
+    flex-direction: row / row-reverse / column / column-reverse;
+    text-align: center;
+  }
+
+  /* Navbar (Chrome) */
+
   body::-webkit-scrollbar {
-    width: 1rem;
+    width: 8px;
   }
   
   body::-webkit-scrollbar-track{
@@ -152,7 +232,31 @@
     background: #5329c4;
   }
 
+  /* Navbar (Firefox) */
+
   .scroller {
     overflow-y: scroll;
     scrollbar-color: #1e1e24 #5329c4;
+  }
+
+  .body{
+    color:black;
+    background-color: rgb(51, 38, 16);
+    margin:0;
+    padding:0;
+  }
+  
+  .text-acc{
+    display: flex;
+    margin-left:60px;
+    margin-top:-45px;
+    cursor: pointer;
+  }
+
+  .img-acc img{
+    display:flex;
+    width:50px; 
+    height:50px;
+    margin-top:-5px;
+    cursor:pointer;
   }
