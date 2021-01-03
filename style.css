@@ -125,7 +125,7 @@
     height: 2.5rem;
     background-color: var(--nav-bckg-color);
     z-index: 100000000;
-    position: fixed;
+    position:fixed;
     top:0;
     left:0;
     right:0;
@@ -175,26 +175,13 @@
   }
 
   .container {
-    border-radius: 15px;
-    margin-left:1.7rem;
-    margin-top:3.3rem;
-    margin-bottom:1rem;
-    margin-right:1rem;
-    background-color:darkgrey;
-    flex-direction: row / row-reverse / column / column-reverse;
-    text-align: center;
-    filter: grayscale(0%) opacity(1);
-  }
-
-  .container-accueil{
-    border-radius: 15px;
     margin-left:1rem;
-    margin-top:3.5rem;
+    margin-top:3.8rem;
     margin-bottom:1rem;
     margin-right:1rem;
-    background-color:darkgrey;
     flex-direction: row / row-reverse / column / column-reverse;
     text-align: center;
+
   }
 
   .navbar:hover .container {
@@ -203,13 +190,13 @@
 
   .container-inside {
     margin-left:1.5rem;
-    margin-top:3rem;
+    margin-top:1.5rem;
     margin-bottom:1.5rem;
     margin-right:1.5rem;
     flex-direction: row / row-reverse / column / column-reverse;
     text-align:justify;
   }
-
+  /*
   .container-adaptive {
     border-radius: 10px;
     margin:auto;
@@ -217,7 +204,7 @@
     flex-direction: row / row-reverse / column / column-reverse;
     text-align: center;
   }
-
+  */
   /* Navbar (Chrome) */
 
   body::-webkit-scrollbar {
@@ -225,11 +212,11 @@
   }
   
   body::-webkit-scrollbar-track{
-    background: #1e1e24;
+    background: #303038;
   }
   
   body::-webkit-scrollbar-thumb{
-    background: #5329c4;
+    background: var(--main-color);
   }
 
   /* Navbar (Firefox) */
@@ -260,3 +247,66 @@
     margin-top:-5px;
     cursor:pointer;
   }
+
+  /* Style container (p, span...) */
+
+  .url{
+    display: block;
+    margin-top: 0;
+  }
+
+  .container .titre{
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 50px;
+  }
+
+  .container .container-inside p{
+    display: block;
+    font-size: 25px;
+    line-height: 40px;
+    margin-top:15px;
+    margin-bottom:30px;
+    text-indent:50px;
+  }
+
+  .container .container-inside span{
+    display: block;
+    font-weight: bold;
+    margin-top:50px;
+  }
+
+  .container .container-inside .txt{
+    display:block;
+  }
+
+  .container p .txt1{
+    display:block;
+    text-indent:20px;
+  }
+
+  .container .container-inside h4{
+    margin-top: 20px;
+  }
+
+  .container .container-inside img{
+    display: block;
+    align-items: center;
+    width:30%;
+    height:40%; 
+  }
+
+  hr {
+    height:2px;
+    width:94%;
+    align-items: center;
+    margin-top:40px;
+    margin-left:2rem;
+    margin-right:2em;
+  }
+
+  .stylehr{
+    margin-top:60px;
+  }
+
