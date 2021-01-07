@@ -468,7 +468,7 @@
         L'injection SQL, noSQL, OS et LDAP
       </div>
       <div class="container-inside">
-        <h3>Introduction au concept d’injection :</h3>
+        <h3><u>Introduction au concept d’injection :</u></h3>
         <p>
           L’attaque par injection correspond en fait à l’insertion d’un script, bout de code ou requête malveillante
           dans une application web (ou un programme). Le but d’une telle attaque peut être multiple, suivant les
@@ -482,7 +482,9 @@
           requête qui, par exemple, n’a pas été géré en tant qu’exception au niveau du back-end du site et qui pourra de
           ce fait dialoguer avec la base. Le schéma ci-dessous illustre l’attaque par injection SQL :
         </p>
-
+        <div class="img-p">
+          <img src="img/inj/inj1.PNG">
+        </div>
         <p>
           Ainsi, la faille d’injection permet à un utilisateur malveillant d’effectuer une attaque en envoyant une
           requête malveillante à la base, ce qui peut avoir différentes répercussions sur la base elle-même :
@@ -493,7 +495,7 @@
           premier cas les trois types d’exploitations SQL qu’il existe.
         </p>
 
-        <h3>INJECTION SQL – 2 classes d’exploitations connues</h3>
+        <h3><u>INJECTION SQL – 2 classes d’exploitations connues</u></h3>
 
         <p>
           <span>
@@ -505,58 +507,54 @@
           <span>
             Attaque basée sur l’erreur :
           </span>
-          <txt>
-            Amener une base de données à renvoyer une erreur peut permettre d’afficher des noms de tables / de champs
-            dans une table et, au final, à donner une topologie de la base de données à une personne malveillante. Cette
-            attaque est surtout utilisée au moment d’afficher des éléments (liste sous forme de tableau ou de chaînes de
-            caractères). Toujours en se plaçant dans le cas d’un site étant codé en PHP pour le lien avec la base, on
-            peut par exemple se retrouver avec un affichage de ce type :
-          </txt>
+          Amener une base de données à renvoyer une erreur peut permettre d’afficher des noms de tables / de champs
+          dans une table et, au final, à donner une topologie de la base de données à une personne malveillante. Cette
+          attaque est surtout utilisée au moment d’afficher des éléments (liste sous forme de tableau ou de chaînes de
+          caractères). Toujours en se plaçant dans le cas d’un site étant codé en PHP pour le lien avec la base, on
+          peut par exemple se retrouver avec un affichage d'erreur indiquant le nom d'une des tables.
+
           <span>
             Attaque basée sur l’union :
           </span>
-          <txt>
-            Dans une attaque basée sur l’union, l’attaquant va créer une union en SQL afin de pouvoir par exemple
-            afficher dans le résultat le contenu d’une table différente :
-          </txt>
-          <txt>
-            Cette première requête va simplement afficher les 10 premiers utilisateurs de la table utilisateur. Si on a
-            accès à la requête SQL en clair, il est alors possible de venir ajouter derrière l’union :
-          </txt>
-          <txt>
-            Cette union permet d’afficher les utilisateurs et leurs mots de passe associé depuis la même table
-            utilisateur.
-          </txt>
-
-          <span>
-            2. Injection SQL inférentielle (ou dite à l’aveugle) :
-            ce type de requête SQL est utilisé lorsqu’une requête n’est pas directement transmis à une page Web. Elle
-            permet d’envoyer des requêtes à une base de données afin de recueillir les informations qu’elle contient. On
-            distingue encore une fois deux types d’injections SQL inférentielles :
-          </span>
-          <span>
-            Attaque booléenne :
-          </span>
-          <txt>
-            Grâce à une attaque booléenne, un attaquant va juger de la protection d’une base face à une injection SQL.
-            Il est question d’entrer dans des inputs de texte (imaginons par exemple un input de texte pour saisir un
-            identifiant ou un mot de passe dans une interface de connexion quelconque) ces deux lignes :
-            <br><strong>“Alfred’ AND ‘1’=’2”</strong>
-            <br><strong>“Alfred’ AND ‘1’=’1”</strong>
-            <br>
-            Si, lors de la deuxième requête, on a un résultat différent du premier ou que l’application fonctionne, cela
-            révèle l’existence d’une vulnérabilité à l’injection SQL (nous verrons un peu après en détails la
-            significaiton du ‘1’=’1’.
-          </txt>
-          <span>
-            Attaque basée sur le temps :
-          </span>
-          <txt>
-            En utilisant une fonction temporelle prédéfinie sur le gestionnaire de base de données, il est possible de
-            détecter
-          </txt>
+          Dans une attaque basée sur l’union, l’attaquant va créer une union en SQL afin de pouvoir par exemple
+          afficher dans le résultat le contenu d’une table différente : <br>
+        <div class="img-p">
+          <img src="img/inj/inj2.PNG" style="width: 45%;">
+        </div>
+        <br>
+        Cette première requête va simplement afficher les 10 premiers utilisateurs de la table utilisateur. Si on a
+        accès à la requête SQL en clair, il est alors possible de venir ajouter derrière l’union : <br><br>
+        <div class="img-p">
+          <img src="img/inj/inj3.PNG" style="width: 45%;">
+        </div>
+        <br>
+        Cette union permet d’afficher les utilisateurs et leurs mots de passe associé depuis la même table
+        utilisateur.
+        <span>
+          2. Injection SQL inférentielle (ou dite à l’aveugle) :
+          ce type de requête SQL est utilisé lorsqu’une requête n’est pas directement transmis à une page Web. Elle
+          permet d’envoyer des requêtes à une base de données afin de recueillir les informations qu’elle contient. On
+          distingue encore une fois deux types d’injections SQL inférentielles :
+        </span>
+        <span>Attaque booléenne : </span>
+        Grâce à une attaque booléenne, un attaquant va juger de la protection d’une base face à une injection SQL.
+        Il est question d’entrer dans des inputs de texte (imaginons par exemple un input de texte pour saisir un
+        identifiant ou un mot de passe dans une interface de connexion quelconque) ces deux lignes :
+        <br><strong>“Alfred’ AND ‘1’=’2”</strong>
+        <br><strong>“Alfred’ AND ‘1’=’1”</strong>
+        <br>
+        Si, lors de la deuxième requête, on a un résultat différent du premier ou que l’application fonctionne, cela
+        révèle l’existence d’une vulnérabilité à l’injection SQL (nous verrons un peu après en détails la
+        significaiton du ‘1’=’1’.
+        <span>
+          Attaque basée sur le temps :
+        </span>
+        En utilisant une fonction temporelle prédéfinie sur le gestionnaire de base de données, il est possible pour un
+        hacker de déterminer la présence (ou non) d'une vulnérabilité dans l'application web. L'attaquant peut par
+        exemple utiliser une fonction temporelle prédéfinie dans MySQL, <strong>sleep</strong>, et s'il constate que la
+        requête prend effectivement une certaine pause après exécution, cela signifie qu'il y a bien une vulnérabilité.
         </p>
-        <h4>INJECTION SQL - Faille ‘ OR 1=1;-- et ‘admin’; --</h4>
+        <h4><u>INJECTION SQL - Faille ‘ OR 1=1;-- et ‘admin’; --</u></h4>
         <span>
           Introduction
         </span>
@@ -570,8 +568,7 @@
           infinies pour ce type de requête. En effet, il
           est question d’altérer la requête SQL vers la base en la modifiant. Il faut bien comprendre ici que, si le
           site est par exemple codé en PHP, on retrouvera dans le code une requête de type <strong>‘’SELECT id FROM
-            utilisateurs
-            WHERE nom = $nom AND password = ‘$mdp’’’</strong>.
+            utilisateurs WHERE nom = $nom AND password = ‘$mdp’’’</strong>.
         </p>
         <span>
           Exploitation de la faille
@@ -591,7 +588,7 @@
           est connu).
         </p>
         <span>
-          Prévention / contre de la faille
+          Prévention / contre des failles SQL
         </span>
         <p>
           Stocker le mot de passe dans une variable de POST (en PHP) puis hacher le mot de passe avant de l’insérer dans
@@ -599,6 +596,9 @@
           non
           des requêtes SQL dynamiques Ainsi, on obtient un code de ce type :
         </p>
+        <div class="img-p">
+          <img src="img/inj/inj4.PNG" style="width:45%">
+        </div>
         <p>
           Ici, aucune requête SQL n’est directement envoyée depuis l’input du mot de passe. Le mot de passe sera
           également
@@ -652,7 +652,7 @@
           <strong>mysqli_real_escape_string(argument)</strong>.
         </p>
         <span>
-          INJECTION noSQL – Types de bases, injections connues
+          <u>INJECTION noSQL – Types de bases, injections connues</u>
         </span>
         <p>
           Les bases de données noSQL permettent de manipuler une quantité de données bien plus importante que ce que
@@ -690,7 +690,7 @@
         Broken authentication
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           Broken Authentication est un terme qui désigne les failles concernant la gestion des sessions et la gestion
           des identifiants.
@@ -700,51 +700,40 @@
           cibler une personne en particulier pour récupérer des informations critiques le concernant.
         </p>
 
-        <h3>Broken authentication - Exploitation des failles </h3>
+        <h3><u>Broken authentication - Exploitation des failles </u></h3>
 
         <p>
           <span>Exploitation des cookies :</span>
-          <txt>
-            Voyons maintenant les attaques sur la gestion des identifiants.
-          </txt>
+          Voyons maintenant les attaques sur la gestion des identifiants.
           <span>Credential Stuffing :</span>
-          <txt>
-            Une attaque Credential Stuffing est une technique brute force qui est basée sur l'utilisation d'identifiants
-            compromis, d'identifiants contenus dans des bases de données piratées pour accéder à des
-            comptes utilisateurs.<br>
-            En effet, en utilisant cette attaque, les hackers partent du principe que les utilisateurs utilisent
-            régulièrement le même mot de passe pour différents comptes.
-            Pour renforcer le brute-forcing, ils utilisent généralement des botnets (un ensemble de machines
-            interconnectées qui sont composées de bot).
-          </txt>
-          <txt>
-            La seule manière de se protéger de ceci est de ne pas réutiliser le même mot de passe, ou des mots de passe
-            faibles très connus.
-            Ci-dessous un schéma montrant le fonctionnement de l'attaque par credential stuffing :
-          </txt>
 
-          <txt>
-            Le seul moyen de se protéger contre des attaques brute-force est d’implémenter une fonction qui limite le
-            nombre d'essais par machines.
-          </txt>
+          Une attaque Credential Stuffing est une technique brute force qui est basée sur l'utilisation d'identifiants
+          compromis, d'identifiants contenus dans des bases de données piratées pour accéder à des
+          comptes utilisateurs.<br>
+          En effet, en utilisant cette attaque, les hackers partent du principe que les utilisateurs utilisent
+          régulièrement le même mot de passe pour différents comptes.
+          Pour renforcer le brute-forcing, ils utilisent généralement des botnets (un ensemble de machines
+          interconnectées qui sont composées de bot).
+
+          La seule manière de se protéger de ceci est de ne pas réutiliser le même mot de passe, ou des mots de passe
+          faibles très connus.
+          Ci-dessous un schéma montrant le fonctionnement de l'attaque par credential stuffing :
+          Le seul moyen de se protéger contre des attaques brute-force est d’implémenter une fonction qui limite le
+          nombre d'essais par machines.
           <span>Password Spraying :</span>
-          <txt>
-            Le password spraying est aussi une attaque basée sur du brute-force, mais, contrairement à l’attaque
-            précédente où un
-            hacker essayait différents noms de comptes et différents mots de passes, ici le hacker brute-force
-            différents
-            comptes avec un mot de passe compromis ou connu.<br>
-            Le but de cette attaque, à contrario avec la précédente, est d'être plus discret. En effet, de cette
-            manière, l’attaquant se fera moins bloquer en attaquant une fois plusieurs comptes.
-          </txt>
+          Le password spraying est aussi une attaque basée sur du brute-force, mais, contrairement à l’attaque
+          précédente où un
+          hacker essayait différents noms de comptes et différents mots de passes, ici le hacker brute-force
+          différents
+          comptes avec un mot de passe compromis ou connu.<br>
+          Le but de cette attaque, à contrario avec la précédente, est d'être plus discret. En effet, de cette
+          manière, l’attaquant se fera moins bloquer en attaquant une fois plusieurs comptes.
           <br>
-          <txt>
-            Voici les différents moyens pour renforcer les failles de type Broken Authentication et ainsi protéger les
-            sessions et les comptes des utilisateurs.
-          </txt>
+          Voici les différents moyens pour renforcer les failles de type Broken Authentication et ainsi protéger les
+          sessions et les comptes des utilisateurs.
         </p>
 
-        <h3>Broken authentication - Protection contre les failles</h3>
+        <h3><u>Broken authentication - Protection contre les failles</u></h3>
 
         <span id=100>Control Session Length :</span>
         <p>
@@ -803,24 +792,157 @@
           par exemple.<br>
           Librairies utiles pour renforcer l’appli web:
         </p>
-        <br>
-        <p style="margin-top: -50px;">
-          <span>Bonnes pratiques et stockage de mots de passes :</span>
-          <txt1>
-            Ne pas permettre les connexions qui ont accès au codes du site et qui peuvent être utilisés pour modifier les
-            fonctionnalités du site que ce soit côté client ou côté serveur.
-          </txt1>
-          <txt1><br>
-            Ne pas utiliser le même moyen d’authentification pour les accès de clients que pour les accès des admins.
-          </txt1>
-          <txt1>
-            Hacher les mots de passes avec une fonction de hachage modernes si possible ou des fonctions de hachage plus anciennes mais
-            toujours sécurisées.<br>
-            En php: <strong><a style="color:#23232e;" href="https://www.php.net/manual/en/function.password-hash.php" target="_blank">https://www.php.net/manual/en/function.password-hash.php</a></strong>
-          </txt1>
+        <h3 style="margin-bottom:50px;"><u>Bonnes pratiques et stockage de mots de passes :</u></h3>
+        <p style="margin-top:-20px;text-indent: 0;">
+          Ne pas permettre les connexions qui ont accès au codes du site et qui peuvent être utilisés pour modifier les
+          fonctionnalités du site que ce soit côté client ou côté serveur.
+          <br>
+          Ne pas utiliser le même moyen d’authentification pour les accès de clients que pour les accès des admins.
+          Hacher les mots de passes avec une fonction de hachage modernes si possible ou des fonctions de hachage plus
+          anciennes mais
+          toujours sécurisées.<br>
+          En php: <strong><a style="color:#23232e;" href="https://www.php.net/manual/en/function.password-hash.php"
+              target="_blank">https://www.php.net/manual/en/function.password-hash.php</a></strong>
         </p>
       </div>
     </div>
+
+    <div class="stylehr">
+      <hr id="3">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Sensitive data exposure (API et applications web)
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="4">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        XML External Entities (XXE)
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="5">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Broken Access Control
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="6">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Security Misconfiguration
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="7">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Cross-Site Scripting XSS
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="8">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Insecure Deserialization
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="9">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Using Components With Known Vulnerabilities
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
+    <div class="stylehr">
+      <hr id="10">
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="titre">
+        Insufficient Logging & Monitoring
+      </div>
+      <div class="container-inside">
+        <h3>Introduction :</h3>
+        <p>
+
+        </p>
+      </div>
+    </div>
+
   </main>
 
 </body>

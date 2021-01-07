@@ -26,8 +26,8 @@
   }
   
   li, a, button {
+    color:var(--text-triary);
     text-decoration: none;
-    color:var(--text-triary)
   }
 
   /* Navbar générale */
