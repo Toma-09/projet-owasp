@@ -196,6 +196,7 @@
     flex-direction: row / row-reverse / column / column-reverse;
     text-align:justify;
   }
+
   /*
   .container-adaptive {
     border-radius: 10px;
@@ -205,6 +206,7 @@
     text-align: center;
   }
   */
+
   /* Navbar (Chrome) */
 
   body::-webkit-scrollbar {
@@ -304,4 +306,3 @@
   .stylehr{
     margin-top:60px;
   }
-
