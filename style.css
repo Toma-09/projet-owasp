@@ -144,7 +144,6 @@
   .nav_links li {
     display: inline-block;
     padding: 0px 20px;
-    
   }
   
   .nav_links li a, .sidenav li a {
@@ -153,6 +152,16 @@
   
   .nav_links li a:hover, .sidenav li a:hover {
     color: var(--main-color);   
+  }
+
+  .nav_links li .current a{
+    font-weight: bolder; 
+    font-size: 30px;
+    color:#0088a9;
+  }
+
+  .nav_links li .current a:hover{
+    color:#F0F1F2;
   }
 
   .dropdown {
@@ -253,10 +262,10 @@
   .img-p img{
     display: block;
     margin:auto;
-    width:35%;
+    width:18rem;
   }
 
-  /* Style container (p, span...) */
+  /* Style container (p, span, txt...) */
 
   .url{
     display: block;
@@ -264,16 +273,20 @@
   }
 
   .container .titre{
+    display:block;
+    margin:auto;
+    color:var(--bg-primary);
     font-size: 50px;
     text-transform: uppercase;
     font-weight: bold;
-    line-height: 50px;
+    line-height: 2rem;
+    margin-bottom: 3.5rem;;
   }
 
   .container .container-inside p{
     display: block;
     font-size: 25px;
-    line-height: 40px;
+    line-height: 1.5rem;
     margin-top:15px;
     margin-bottom:30px;
     text-indent:50px;
@@ -285,9 +298,13 @@
     margin-top:50px;
   }
 
-  .container .container-inside p .txt{
+  .txt{
     display:block;
-    margin-top:-20px;
+    font-size: 25px;
+    line-height: 1.5rem;
+    margin-bottom:20px;
+    text-indent: 0;
+    margin-top:10px;
   }
 
   .container .container-inside h4{
@@ -305,4 +322,144 @@
 
   .stylehr{
     margin-top:60px;
+  }
+
+  .container .container-inside .txt a,
+  .container .container-inside p a{
+    transition: all 0.3s ease 0s;
+    color:#23232e;
+    font-weight: bolder;
+  }
+
+  .container .container-inside .txt a:hover,
+  .container .container-inside p a:hover{
+    color:var(--text-primary);
+  }
+
+  .hello{
+    text-indent:-30px;
+    margin-left:30px;
+    font-weight:bold;
+    cursor: default;
+    text-align: left;
+  }
+
+  .hello1{
+    font-weight:bold;
+    cursor: default;
+    text-align:left;
+  }
+
+  /* Tableau */
+
+  .tableau {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin:2rem auto 2rem auto;
+    text-align: center;
+  }
+  
+  .tableau thead tr {
+    background-color: var(--main-color);
+    color: #ffffff;
+    font-weight: bold;
+    cursor:default;
+  }
+  
+  .tableau th,
+  .tableau td {
+    padding: 0.5rem 2rem;
+    cursor: default;
+  }
+  
+  .tableau tbody tr {
+    border-bottom: 0.09rem solid #dddddd;
+  }
+  
+  .tableau tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .tableau tbody tr:last-of-type {
+    border-bottom: 0.1rem solid var(--main-color);
+  }
+
+  .tableau tbody tr:hover {
+    background-color: #dad8d8;
+    transition:350ms;;
+  }
+
+  .tableau tbody tr a{
+    transition: all 0.3s ease 0s;
+    font-weight: bold;
+    color:rgb(24, 24, 24);
+  }
+
+  .tableau tbody tr a:hover{
+    color:var(--text-secondary);
+  }
+
+  .tableau1 {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin:2rem auto 2rem auto;
+    text-align: center;
+  }
+  
+  .tableau1 thead tr {
+    background-color: var(--main-color);
+    color: #ffffff;
+    font-weight: bold;
+    cursor:default;
+  }
+  
+  .tableau1 th,
+  .tableau1 td {
+    padding: 0.5rem 1rem;
+    cursor: default;
+  }
+
+  .tableau1 tbody td{
+    border-right: 0.09rem solid rgb(207, 207, 207);
+  }
+
+  .tableau1 tbody td:last-of-type{
+    border-right:transparent;
+  }
+  
+  .tableau1 tbody tr {
+    border-bottom: 0.09rem solid #dddddd;
+  }
+  
+  .tableau1 tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .tableau1 tbody tr:last-of-type {
+    border-bottom: 0.1rem solid var(--main-color);
+  }
+
+  .tableau1 tbody tr:hover {
+    background-color: #e0e0e0;
+    transition:350ms;
+  }
+
+  .tableau1 tbody tr a{
+    transition: all 0.3s ease 0s;
+    font-weight: bold;
+    color:rgb(24, 24, 24);
+  }
+
+  .tableau1 tbody tr a:hover{
+    color:var(--text-secondary);
+  }
+
+  strong{
+    cursor: default;
   }

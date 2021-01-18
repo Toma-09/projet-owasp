@@ -25,7 +25,9 @@
         <h4><a href="index.html">Accueil</a></h4>
       </li>
       <li>
-        <h4><a style="font-weight: bolder; font-size: 30px;" href="#">Liste OWASP</a></h4>
+        <div class="current">
+          <h4><a href="#">Liste OWASP</a></h4>
+        </div>
       </li>
       <li>
         <h4><a href="bibliographie.html">Bibliographie</a></h4>
@@ -468,7 +470,7 @@
         L'injection SQL, noSQL, OS et LDAP
       </div>
       <div class="container-inside">
-        <h3><u>Introduction au concept d’injection :</u></h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           L’attaque par injection correspond en fait à l’insertion d’un script, bout de code ou requête malveillante
           dans une application web (ou un programme). Le but d’une telle attaque peut être multiple, suivant les
@@ -485,6 +487,7 @@
         <div class="img-p">
           <img src="img/inj/inj1.PNG">
         </div>
+        <br>
         <p>
           Ainsi, la faille d’injection permet à un utilisateur malveillant d’effectuer une attaque en envoyant une
           requête malveillante à la base, ce qui peut avoir différentes répercussions sur la base elle-même :
@@ -495,69 +498,79 @@
           premier cas les trois types d’exploitations SQL qu’il existe.
         </p>
 
-        <h3><u>INJECTION SQL – 2 classes d’exploitations connues</u></h3>
+        <h2><u>Injection SQL</u></h2>
 
+        <p></p>
+        <span></span>
+        <div class="txt">Il existe deux grandes familles d'injection SQL :</div>
+        <span style="font-size:29px">1. Injection SQL in-band :</span>
         <p>
-          <span>
-            1. Injection SQL in-band :
-            le type d’injection SQL en bande est un processus par lequel une personne malveillante va pouvoir en même
-            temps pouvoir injecter du code dans un site web / une application, ainsi que d’afficher et donc avoir accès
-            aux résultats. On distingue deux attaques différentes :
-          </span>
-          <span>
-            Attaque basée sur l’erreur :
-          </span>
+          Le type d’injection SQL en bande est un processus par lequel une personne malveillante va pouvoir en même
+          temps pouvoir injecter du code dans un site web / une application, ainsi que d’afficher et donc avoir accès
+          aux résultats. On distingue deux types d'attaques différents :
+        </p>
+        <span>
+          Attaque basée sur l’erreur :
+        </span>
+        <div class="txt">
           Amener une base de données à renvoyer une erreur peut permettre d’afficher des noms de tables / de champs
           dans une table et, au final, à donner une topologie de la base de données à une personne malveillante. Cette
           attaque est surtout utilisée au moment d’afficher des éléments (liste sous forme de tableau ou de chaînes de
           caractères). Toujours en se plaçant dans le cas d’un site étant codé en PHP pour le lien avec la base, on
           peut par exemple se retrouver avec un affichage d'erreur indiquant le nom d'une des tables.
-
-          <span>
-            Attaque basée sur l’union :
-          </span>
-          Dans une attaque basée sur l’union, l’attaquant va créer une union en SQL afin de pouvoir par exemple
-          afficher dans le résultat le contenu d’une table différente : <br>
-        <div class="img-p">
-          <img src="img/inj/inj2.PNG" style="width: 45%;">
         </div>
-        <br>
-        Cette première requête va simplement afficher les 10 premiers utilisateurs de la table utilisateur. Si on a
-        accès à la requête SQL en clair, il est alors possible de venir ajouter derrière l’union : <br><br>
-        <div class="img-p">
-          <img src="img/inj/inj3.PNG" style="width: 45%;">
-        </div>
-        <br>
-        Cette union permet d’afficher les utilisateurs et leurs mots de passe associé depuis la même table
-        utilisateur.
         <span>
-          2. Injection SQL inférentielle (ou dite à l’aveugle) :
-          ce type de requête SQL est utilisé lorsqu’une requête n’est pas directement transmis à une page Web. Elle
+          Attaque basée sur l’union :
+        </span>
+        <div class="txt">
+          Dans une attaque basée sur l’union, l’attaquant va créer une union en SQL afin de pouvoir par exemple
+          afficher dans le résultat le contenu d’une table différente : <br><br>
+          <div class="img-p">
+            <img src="img/inj/inj2.png" style="width: 28rem;">
+          </div>
+          <br>
+          Cette première requête va simplement afficher les 10 premiers utilisateurs de la table utilisateur. Si on a
+          accès à la requête SQL en clair, il est alors possible de venir ajouter derrière l’union : <br><br>
+          <div class="img-p">
+            <img src="img/inj/inj3.png" style="width: 28rem;">
+          </div>
+          <br>
+          Cette union permet d’afficher les utilisateurs et leurs mots de passe associé depuis la même table
+          utilisateur.
+        </div>
+        <p><span style="font-size:29px">2. Injection SQL inférentielle (ou dite à l’aveugle) :</span></p>
+        <p>
+          Ce type de requête SQL est utilisé lorsqu’une requête n’est pas directement transmis à une page Web. Elle
           permet d’envoyer des requêtes à une base de données afin de recueillir les informations qu’elle contient. On
           distingue encore une fois deux types d’injections SQL inférentielles :
-        </span>
+        </p>
         <span>Attaque booléenne : </span>
-        Grâce à une attaque booléenne, un attaquant va juger de la protection d’une base face à une injection SQL.
-        Il est question d’entrer dans des inputs de texte (imaginons par exemple un input de texte pour saisir un
-        identifiant ou un mot de passe dans une interface de connexion quelconque) ces deux lignes :
-        <br><strong>“Alfred’ AND ‘1’=’2”</strong>
-        <br><strong>“Alfred’ AND ‘1’=’1”</strong>
-        <br>
-        Si, lors de la deuxième requête, on a un résultat différent du premier ou que l’application fonctionne, cela
-        révèle l’existence d’une vulnérabilité à l’injection SQL (nous verrons un peu après en détails la
-        significaiton du ‘1’=’1’.
+        <div class="txt">
+          Grâce à une attaque booléenne, un attaquant va juger de la protection d’une base face à une injection SQL.
+          Il est question d’entrer dans des inputs de texte (imaginons par exemple un input de texte pour saisir un
+          identifiant ou un mot de passe dans une interface de connexion quelconque) ces deux lignes :
+          <br><strong>“Alfred’ AND ‘1’=’2”</strong>
+          <br><strong>“Alfred’ AND ‘1’=’1”</strong>
+          <br>
+          Si, lors de la deuxième requête, on a un résultat différent du premier ou que l’application fonctionne, cela
+          révèle l’existence d’une vulnérabilité à l’injection SQL (nous verrons un peu après en détails la
+          significaiton du ‘1’=’1’.
+        </div>
         <span>
           Attaque basée sur le temps :
         </span>
-        En utilisant une fonction temporelle prédéfinie sur le gestionnaire de base de données, il est possible pour un
-        hacker de déterminer la présence (ou non) d'une vulnérabilité dans l'application web. L'attaquant peut par
-        exemple utiliser une fonction temporelle prédéfinie dans MySQL, <strong>sleep</strong>, et s'il constate que la
-        requête prend effectivement une certaine pause après exécution, cela signifie qu'il y a bien une vulnérabilité.
+        <div class="txt">
+          En utilisant une fonction temporelle prédéfinie sur le gestionnaire de base de données, il est possible pour
+          un
+          hacker de déterminer la présence (ou non) d'une vulnérabilité dans l'application web. L'attaquant peut par
+          exemple utiliser une fonction temporelle prédéfinie dans MySQL, <strong>sleep</strong>, et s'il constate que
+          la
+          requête prend effectivement une certaine pause après exécution, cela signifie qu'il y a bien une
+          vulnérabilité.
+        </div>
         </p>
+        <span></span>
         <h4><u>INJECTION SQL - Faille ‘ OR 1=1;-- et ‘admin’; --</u></h4>
-        <span>
-          Introduction
-        </span>
         <p>
           Comme dit précédemment, il est notamment possible de pouvoir s’authentifier sur le compte d’un utilisateur
           simplement en connaissant son pseudo. Pour cela, plusieurs solutions s’offrent à vous : tenter des pseudos
@@ -573,7 +586,7 @@
         <span>
           Exploitation de la faille
         </span>
-        <p>
+        <div class="txt">
           Ce qu’on cherche à faire dans cette faille, c’est réécrire la requête en modifiant sa structure. Ainsi, le «
           mot de passe » rentré par l’utilisateur malveillant va changer la fin du code, qui va alors devenir
           <strong>‘’SELECT id FROM utilisateurs WHERE nom = $nom AND password = ‘ OR 1=1;--’’</strong>. La requête a
@@ -586,33 +599,42 @@
           afin de prendre
           possession de l’utilisateur admin et pouvoir se connecter sur le site (marche avec tout utilisateur si le nom
           est connu).
-        </p>
+        </div>
         <span>
-          Prévention / contre des failles SQL
+          <h3><u>Injection SQL - Protection contre les failles </u></h3>
         </span>
-        <p>
+
+        <span>Hachage de mot de passe :</span>
+
+        <div class="txt">
           Stocker le mot de passe dans une variable de POST (en PHP) puis hacher le mot de passe avant de l’insérer dans
           la requête SQL permet d’éviter la modification de la requête. Il faut donc utiliser une procédure stockée et
           non
           des requêtes SQL dynamiques Ainsi, on obtient un code de ce type :
-        </p>
-        <div class="img-p">
-          <img src="img/inj/inj4.PNG" style="width:45%">
         </div>
-        <p>
+
+        <div class="img-p">
+          <img src="img/inj/inj4.png" style="width:30rem;">
+        </div>
+
+        <span></span>
+
+        <div class=txt>
           Ici, aucune requête SQL n’est directement envoyée depuis l’input du mot de passe. Le mot de passe sera
           également
-          hashé avant de passer dans la requête (en sha256, on obtiendra le hash :
-          <strong>9172e8eec99f144f72eca9a568759580edadb2cfd154857f07e657569493bc44</strong>). Ainsi, le mot de passe ne
-          transitera pas en
-          clair lors des différents appels, et même si en entrée un utilisateur malveillant a écrit <strong>‘ OR
+          hashé avant de passer dans la requête (en sha256, on obtiendra le hash :<br>
+          <strong style="font-size: 21px;">9172e8eec99f144f72eca9a568759580edadb2cfd154857f07e657569493bc44</strong>).
+          Ainsi, le mot de passe ne
+          transitera pas en clair lors des différents appels, et même si en entrée un utilisateur malveillant a écrit
+          <strong>‘ OR
             1=1;--</strong>, cette
           chaîne de caractères sera simplement hashée et ne posera pas de problème lors de la requête.
           Pour tout type de requête SQL, il ne faut pas laisser la possibilité aux utilisateurs de pouvoir entrer du
           code
           SQL librement en sécurisant les inputs de texte.
-        </p>
-        <p>
+        </div>
+        <span>Multiplication de requêtes et déclarations préparées :</span>
+        <div class="txt">
           Multiplier les requêtes précises permet également de limiter l’accès aux données si une faille venait à être
           trouvée. Imaginons une requête SQL qui va sélectionner toutes les informations d’un utilisateur en comparant
           le
@@ -625,19 +647,25 @@
           renvoyer les informations de l’utilisateur permet de sécuriser l’accès aux différentes données relatives aux
           utilisateurs :
           <strong>‘’SELECT user_id FROM utilisateurs WHERE nom = $nom’’</strong>.
-        </p>
-        <p>
+        </div>
+        <div class="txt">
           Il est également possible d’utiliser des déclarations préparées pour éviter les injections SQL. Une
           instruction
           préparée est un modèle de requête SQL, dans lequel il faut spécifier des paramètres à un stade ultérieur pour
-          l’exécuter. Voici un exemple d’une déclaration préparée en PHP et MySQLi : <br>
-          <strong>$query = $mysql_connection -> prepare("select * from utilisateurs where username = ? and password =
-            ?");</strong>
-          <strong>$query->execute(array($username, $password));</strong><br>
+          l’exécuter. Voici un exemple d’une déclaration préparée en PHP et MySQLi :
+        </div>
+
+        <div class="hello1" style="margin-top: -10px; margin-bottom: 15px;">
+          $query = $mysql_connection -> prepare("select * from utilisateurs where username = ? and password =
+          ?");
+          $query->execute(array($username, $password));
+        </div>
+        <div class="txt">
           Il est de toute façon préférable de toujours utiliser PDO ou mysqli en PHP, qui mettent à disposition de
           l’utilisateur des fonctions de contrôle des données.
-        </p>
-        <p>
+        </div>
+        <span>Echappement des caractères spéciaux :</span>
+        <div class="txt">
           En complément à toutes ces préventions, il faut savoir que, de manière générale, il est difficile de
           déterminer
           si une chaîne utilisateur est malveillante ou non. Par conséquent, la meilleure façon de procéder est
@@ -650,19 +678,21 @@
           <strong>mysql_escape_string(argument)</strong>. Il
           est également possible d’échapper une chaîne de caractères dans MySQL en utilisant la fonction
           <strong>mysqli_real_escape_string(argument)</strong>.
-        </p>
+        </div>
         <span>
-          <u>INJECTION noSQL – Types de bases, injections connues</u>
+          <h2><u>INJECTION noSQL</u></h2>
         </span>
+        <span></span>
         <p>
           Les bases de données noSQL permettent de manipuler une quantité de données bien plus importante que ce que
-          peut
-          gérer une base SQL classique tout en ne souffrant pas de la latence dont une telle base souffrirait.
+          peut gérer une base SQL classique tout en ne souffrant pas de la latence dont une telle base souffrirait.
           Généralement, on parle d’association clé-valeur : une base de données noSQL qui regroupe, par exemple, des
-          logs
-          de connexion, ou des événements serveur, peut être un tableau de millions d’entrées, auquel on associe une clé
-          pour avoir accès.
+          logs de connexion, ou des événements serveur, peut être un tableau de millions d’entrées, auquel on associe
+          une clé pour avoir accès.
         </p>
+        <span>
+          Stockage - Type de bases / Schéma d'attaque
+        </span>
         <p>
           Le stockage peut également être orienté document, c’est-à-dire sous la forme de documents de type XML ou JSON
           pour la plupart, mais également orienté colonne ou encore orienté graphe.
@@ -677,6 +707,344 @@
           données
           SQL qui s’appuie sur des solides relations entre ses tables déterminées au départ par un diagramme UML.
         </p>
+        <div class="img-p">
+          <img src="img/inj/inj5.png" style="width:30rem;">
+        </div>
+
+        <span>
+          <h3><u>INJECTION noSQL – Failles</u></h3>
+        </span>
+
+        <span></span>
+
+        <p>
+          Au niveau des failles noSQL, elles sont très proches d’une attaque par injection SQL, à ceci près qu’il faut
+          maintenant créer un tableau afin de faire la requête. Par exemple, en PHP, on peut imaginer avoir un array de
+          ce type pour une association utilisateur – mot de passe :
+        </p>
+
+        <div class="img-p">
+          <img src="img/inj/inj6.PNG" style="width:18rem">
+        </div>
+
+        <span>Authentication Bypass :</span>
+        <div class="txt">
+          Afin de contourner l’authentification, un hackeur va avoir recours à l’utilisation d’opérateurs d’égalité :
+          <strong>$eq</strong> (equals), <strong>$ne</strong> (not equal) ou encore <strong>$gt</strong> (greater than),
+          qui sont indiqués dans la documentation de
+          MongoDB, et plus particulièrement ici à l’utilisation de <strong>$ne</strong>.<br>
+          Pour faire simple, si on vient spécifier que le nom d’utilisateur et le mot de passe ne sont pas égaux à 1
+          (<strong>username[$ne] = 1 & password[$ne] = 1</strong>), cette requête est interprétée par la base MongoDB
+          comme une demande
+          de trouver tous les utilisateurs et les mots de passe qui ne sont pas égaux à 1.<br>
+          Ainsi, dans la même lignée que la faille <strong>OR 1=1</strong> en SQL, cela revient à spécifier un élément
+          qui est toujours
+          vrai et, si aucune sécurité n’est mise en place, une personne malveillante aura alors accès à la base en ayant
+          contourné l’authentification, car la condition « pas égal à 1 » sera validée.<br>
+        </div>
+        <div class="txt">
+          Pour plus d’informations sur le login Bypass, OWASP a publié un PDF regroupant la plupart des attaques connues
+          (sous forme de POST, en utilisant les $ne…) : <a href="https://owasp.org/www-pdf-archive/GOD16-NOSQL.pdf"
+            target="_blank">https://owasp.org/www-pdf-archive/GOD16-NOSQL.pdf</a>
+        </div>
+        <span>Javascript Injection :</span>
+        <div class="txt">
+          Une autre façon d’effectuer une injection noSQL est d’utiliser l’opérateur <strong>$where</strong>, qui va
+          permettre à un
+          hackeur d’injecter du code contenant un morceau de JS dans la base. Bien que cet opérateur ne permette pas
+          d’utiliser toutes les possibilités offertes par JS de façon arbitraire, il est quand même possible pour
+          quelqu’un d’utiliser des fonctions intéressantes.
+        </div>
+        <div class="txt">
+          Par exemple, en utilisant la fonction <strong>find()</strong> sur la collection dont on désire retirer des
+          informations dans la
+          base de données, on aurait une ligne de cette forme : <strong>db.collection.find({$where : function() {return
+            (this.name == $user_data)}});</strong> . Cette ligne signifie qu’on veut afficher la liste des informations
+          d’un
+          utilisateur contenue dans la variable <strong>$user_data</strong> en allant la chercher dans la collection de
+          la base
+          sélectionnée.
+        </div>
+        <div class="txt">
+          En complément à cette injection Javascript, il est possible d’utiliser une fonction temporelle comme en
+          injection SQL classique afin de mettre en pause le serveur de base de données pour savoir si la faille existe
+          bien, à l’aide de la fonction <strong>sleep(n)</strong> (pour n = 10000, le serveur sera en pause pendant 10
+          secondes). Si on
+          l’injecte dans la requête précédente, on obtient : <strong>db.collection.find( {$where : function() {return
+            (this.name
+            == ‘hi’ ; sleep(10000) ) } } );</strong> . Vous aurez donc compris qu’on a quelques possibilités permises
+          par cette
+          fonction.
+        </div>
+
+        <span>
+          <h3><u>INJECTION noSQL – Protection contre les failles</u></h3>
+        </span>
+
+        <span>Interfaces REST clients / serveur de base de données – Echappement et vérification :</span>
+        <div class="txt">
+          Avant de nous intéresser au côté serveur et au backend de celui-ci, il faut déjà faire attention à l’interface
+          client. En effet, les serveurs de bases de données noSQL type MongoDB ou CouchDB sont généralement
+          accompagnées de clients RESTfull, qui permettent de faire le lien entre un (ou plusieurs) client(s) et le
+          service Web. Une telle API REST permet donc à plusieurs clients pouvant avoir des systèmes d’exploitation /
+          des architectures différent(e)s, de communiquer entre eux.<br>
+        </div>
+        <div class="txt">
+          Il faut donc mettre en place un moyen de sécuriser les INPUTS : par exemple, MongoDB possède des fonctions et
+          autres features permettant de sécuriser la création de requêtes. Une autre chose à faire (pour tout type de
+          problème d’injection) est de bien utiliser la règle du « least privilege », qui signifie qu’un utilisateur ne
+          doit posséder que les droits et privilèges qui lui conviennent et uniquement ceux-ci. Il faut donc faire des
+          séries de vérification, mais également d’échappement de caractères suivant le type de base en place, le type
+          de langage utilisé pour dialoguer avec (PHP, Javascript, Python, NodeJS, Pearl…).
+        </div>
+        <div class="txt">
+          En dernier lieu, il faut aussi utiliser des requêtes préparées pour les inputs, afin que l’utilisateur ne
+          puisse pas injecter le contenu qu’il veut depuis l’interface client : utilisation d’expressions régulières,
+          hachage des valeurs entrées / des variables.
+        </div>
+
+        <span>
+          <h2><u>INJECTION OS</u></h2>
+        </span>
+        <span></span>
+        <p>
+          L’injection en ligne de commande (ou injection OS / OS Command Injection en anglais) est un type d’injection
+          grâce à laquelle une personne malveillante va pouvoir, à l’aide de caractères spéciaux, modifier une commande
+          initialement demandée.
+        </p>
+        <p>
+          Pour être plus précis, cela permet, lorsqu’une application ou ligne de commande construit une commande système
+          utilisant des entrées (input) qui peuvent être influencées par l’utilisateur, de transformer la requête à
+          l’avantage d’un hackeur. Cela vient souvent du fait que le software en question ne tient pas compte des
+          caractères spéciaux et n’annule pas leur effet, entraînant ainsi des failles de sécurité.
+        </p>
+
+        <span>
+          <h3><u>INJECTION OS – Failles</u></h3>
+        </span>
+
+        <p>
+          Un exemple concret va nous permettre de comprendre cette attaque : imaginons qu’un hackeur ait accès à une
+          invit de commande type CMD (sous Windows). S’il tape cette la ligne de commande calc & echo I’m a H3CK3R,
+          l’invit va ouvrir la calculatrice, mais également afficher le message I’m a H3CK3R, comme le montre la figure
+          ci-dessous :
+        </p>
+        <div class="img-p">
+          <img src="img/inj/inj7.jpg" style="width:35rem;">
+        </div>
+        <p>
+          Ainsi, en entrant <strong>« & echo I’m a H3CK3R »</strong>, la ligne de commande initiale a été changé et a
+          affiché du texte
+          en plus d’ouvrir la calculatrice.
+          Ce problème d’injection OS peut être d’autant plus retors si la personne malveillante parvient à avoir accès à
+          des commandes systèmes privilégiées (droits administrateur) ou s’il a accès à un processus utilisant des
+          commandes système dans lequel il peut y injecter n’importe quel code.
+        </p>
+
+        <div class="txt">
+          On compte deux types d’injections de commandes OS :
+        </div>
+
+        <span>
+          Inputs extérieurs non sanitarisés :
+        </span>
+
+        <div class="txt">
+          L’application s’apprête à exécuter un programme complet au service de celle-ci, et cette application accepte
+          des inputs extérieurs comme arguments à ce programme (ajout d’arguments manuellement par l’utilisateur donc).
+          Par exemple, si un programme utilise l’appel <strong>system(« nslookup [HOSTNAME] »)</strong>, l’utilisateur
+          doit donc entrer
+          un hostname. Si l’échappement des séparateurs n’a pas été mis en place, le hackeur peut alors mettre des
+          séparateurs avant la commande nslookup et exécuter le code voulu, de la même façon que pour la faille
+          d’injection SQL étudiée précédemment.
+        </div>
+
+        <span>
+          Application utilisant une commande de source externe :
+        </span>
+
+        <div class="txt">
+          L’application a recours à un input qui sélectionne quel programme lancer et quelle commande utiliser, et elle
+          redirige ensuite la commande vers le système pour exécution.
+          Ainsi, si par exemple une application a recours à la ligne <strong>exec([COMMAND])</strong>, où ladite
+          commande vient d’une
+          source externe (et donc non vérifiée par des échappements de caractères entre autres), alors le hackeur qui
+          contrôle cet argument peut exécuter de façon arbitraire n’importe quelle commande et la transmettre au système
+          complet.
+        </div>
+
+        <span>
+          <h3><u>INJECTION OS – Protection contre les Failles</u></h3>
+        </span>
+
+        <span>Echappement / Remplacement de caractères :</span>
+
+        <div class="txt">
+          On ne le dira jamais assez, la première chose à faire pour éviter les problèmes d’injection est d’échapper les
+          caractères spéciaux, afin qu’une personne malveillante ait une erreur en voulant utiliser un séparateur, une
+          mise en commentaire… tout ce qui concerne l’injection d’arguments qui ne devraient pas pouvoir transiter vers
+          les données sensibles. Il faut donc « sanitizer », c’est-à-dire nettoyer les inputs via les commandes
+          suivantes :
+        </div>
+        <div class="txt">
+          En PHP : <strong>escapeshellarg(« paramètre ») | escapeshellcmd() | preg_replace(« /[^a-z0-9\-.]/I”,””,
+            paramètre)</strong>
+        </div>
+        <div class="txt">
+          Pour l’utilisation de l’échappement dans d’autres langages, voir le lien suivant :
+          <a href="https://www.immuniweb.com/vulnerability/os-command-injection.html"
+            target="_blank">https://www.immuniweb.com/vulnerability/os-command-injection.html</a>
+        </div>
+
+        <div class="txt">
+          Certaines invites de commande comme PowerShell sous Windows échappent nativement les caractères spéciaux,
+          empêchant l’utilisation de tels caractères autrement que dans une chaîne de caractères (ils deviennent alors
+          inutilisables et sont simplement considérés comme du texte) :
+        </div>
+
+        <div class="img-p">
+          <img src="img/inj/inj8.png" style="width:30rem">
+        </div>
+
+        <span>Web Application Firewall (WAF) :</span>
+
+        <div class="txt">
+          Utiliser un firewall d’application web peut s’avérer efficace pour éviter les vulnérabilités pendant un temps,
+          mais cela ne constitue pas une solution à long terme : si l’application en question peut avoir un patch de
+          correctif de sécurité, il faut privilégier son installation plutôt que l’utilisation du firewall.
+        </div>
+
+        <span>Laisser les programmes en local :</span>
+
+        <div class="txt">
+          Si un programme doit en appeler un autre ou qu’il doit utiliser des privilèges / commandes système,
+          l’utilisateur ne doit en aucun cas y avoir accès pour éviter l’injection. Si toutefois il est absolument
+          nécessaire qu’il y ait accès, pour entrer un paramètre manuellement, il faut alors mettre en place un
+          échappement de caractères comme décrit au-dessus.
+        </div>
+
+        <span>
+          <h2><u>INJECTION LDAP</u></h2>
+        </span>
+        <span></span>
+        <h3>Introduction au LDAP :</h3>
+        <p>
+          Pour comprendre cette partie, nous allons dans un premier temps définir ce qu’est le LDAP. Le protocole
+          Lightweight Directory Access Protocol (LDAP) est un protocole logiciel constituant une norme pour les systèmes
+          d’annuaires, c’est-à-dire tout ce qui concerne les bases d’informations sur les différents utilisateurs d’un
+          même réseau, grâce au protocole TCP/IP.
+        </p>
+        <p>
+          Il rend donc capable n’importe quel appareil sur un réseau de trouver d’autres ressources localisées
+          elles-aussi sur ce réseau : on retrouve notamment d’autres ordinateurs ou des fichiers envoyés à travers
+          celui-ci.
+          Ce protocole permet également de définir la méthode d’accès aux données d’un serveur du côté client. Le
+          serveur fournira ainsi à l’utilisateur des méthodes qui lui permettent par exemple de se connecter, de
+          comparer des informations avec d’autres entités…
+        </p>
+
+        <h3>Introduction à l'injection LDAP :</h3>
+
+        <p>
+          L’injection LDAP concerne l’exploitation d’une application web qui construit des protocoles LDAP en fonction
+          des informations entrées par l’utilisateur. Etant donné que le protocole LDAP utilise des requêtes qui
+          requièrent l’utilisation de caractères spéciaux. Ils contrôlent donc la signification des requêtes envoyées au
+          serveur et sont utilisables par un utilisateur qui peut, s’il est malintentionné, changer la valeur de la
+          requête initiale pour y insérer un bout de code malicieux et ainsi faire une injection sur le serveur. Un
+          hackeur peut ainsi extraire des données potentiellement sensibles depuis le directory LDAP d’un serveur d’une
+          entreprise ou autre.
+        </p>
+
+        <div class="img-p">
+          <img src="img/inj/inj9.jpg" style="width:27rem">
+        </div>
+
+        <span></span>
+
+        <p>
+          Pour mieux comprendre comment fonctionne l’injection LDAP, commençons par nous intéresser à la syntaxe
+          utilisée. Il faut savoir que la recherche LDAP fonctionne via une combinaison de filtres (composé d’une paire
+          clé-valeur à la façon d’une base noSQL) et d’opérateurs de comparaison dont voici des exemples :
+        </p>
+        <div class="txt" style="margin-top:-10px">
+          <strong>(cn=Jean*)</strong> : cette ligne matche les entrées où le « common name » (prénom) commence par «
+          Jean »<br>
+          <strong>( ! ( cn=*DUPONT) )</strong> : matche les entrées où le nom de famille ne vaut PAS « DUPONT » <br>
+          <strong>( & (cn = J*)(cn=*DUPONT) )</strong> : matche les entrées où le common name commence par un « J » ET
+          finit par «
+          DUPONT »
+        </div>
+
+        <p>
+          Ainsi, comme dit précédemment, les caractères spéciaux utilisés ont beaucoup de sens et il est facile de voir
+          que cela peut vite devenir un problème si un utilisateur s’en sert à des fins malicieuses. De plus, comme pour
+          toutes les autres injections, on peut tout de suite voir qu’il est possible de faire de l’injection à
+          l’aveugle afin de voir si la réponse renvoyée est vraie, auquel cas il existe bel et bien une faille, et
+          ensuite il est possible de récupérer un nom d’attribut ou de variable en cherchant un peu pour ensuite
+          attaquer la base.
+        </p>
+        <p>
+          Les attaques fonctionnant comme pour toutes les autres injections, nous ne verrons ici que l’authentication
+          Bypass (attaque la plus classique). Les autres attaques de type Information Disclosure, Blind Injection
+          (Attribute discovery, Booleanization, Character Set Reduction) sont disponibles sur le site :
+          <a href="https://www.netsparker.com/blog/web-security/command-injection-vulnerability/"
+            target="_blank">https://www.netsparker.com/blog/web-security/command-injection-vulnerability/</a>
+        </p>
+
+        <span>
+          <h3><u>INJECTION LDAP – Attaques</u></h3>
+        </span>
+
+        <span>Authentication Bypass :</span>
+
+        <div class="txt">
+          Comme vu précédemment, l’utilisation de filtres en association avec les opérateurs *, & et ! notamment permet
+          de faire des requêtes complètes sur le serveur LDAP. Dans le cas de l’authentification à un serveur LDAP, on
+          aurait une requête de ce type :
+        </div>
+        <div class="txt">
+          <strong>filtreAuthentification = ‘’ ( & (userID= ‘’ + enteredUser + ‘’)(password = ‘’ + enteredPassword + ‘’ )
+            ) ‘’</strong>
+        </div>
+        <div class="txt">
+          Une fois cette requête entrée, si elle est vraie, cela signifie donc qu’il existe une telle personne dans le
+          directory et la personne sera authentifiée.
+          Ainsi, si un hackeur souhaite s’authentifier sur le serveur, il doit simplement trouver une condition qui est
+          toujours vraie comme pour les autres injections, ce qui donnerait la requête suivante :
+        </div>
+        <div class="txt">
+          <strong>filtreMalicieux = ( & (userID=*)(userID=*) )( | (userID=*)(password=blablabla) ) </strong>
+        </div>
+        <div class="txt">
+          La requête ci-dessus signifie : si l’ID utilisateur vaut n’importe quel caractère et qu’il vaut n’importe quel
+          caractère OU BIEN que l’ID utilisateur vaut n’importe quel caractère et que le mot de passe vaut blablabla
+          alors l’utilisateur pourra être authentifié. La première partie de la requête étant tout le temps vraie, la
+          personne malveillante sera donc connectée sans connaître ni le nom d’utilisateur ni le mot de passe requis.
+        </div>
+
+        <span>
+          <h3><u>INJECTION LDAP – Protection contre les failles :</u></h3>
+        </span>
+
+        <span>Echappement des caractères spéciaux :</span>
+
+        <div class="txt">
+          Deux méthodes sont principalement utilisées pour se prémunir de la faille par injection LDAP, comme pour les
+          autres types d’injection : procéder à l’échappement des caractères spéciaux, afin que seules les requêtes déjà
+          préparées puissent les utiliser vers le serveur. Dans le cas de l’injection LDAP, il convient d’échapper
+          au-moins : <strong>! & ( )</strong> et, surtout, <strong>*</strong>.
+        </div>
+
+        <span>Framework / librairies sécurisés :</span>
+
+        <div class="txt">
+          La deuxième méthode n’a pas été énoncée avant mais concerne toutes les injections : il s’agit de l’utilisation
+          de framework ou de librairies déjà implémentées au niveau sécurité afin de sécuriser les requêtes sans avoir à
+          construire plusieurs fonctions au backend en ne partant de rien. Cette solution est utile car ces
+          bibliothèques contiennent déjà tout un set de fonctions utiles déjà implémentées qu’il faut simplement
+          réutiliser avec les bonnes variables pour sécuriser le serveur.
+        </div>
+
       </div>
     </div>
 
@@ -702,11 +1070,9 @@
 
         <h3><u>Broken authentication - Exploitation des failles </u></h3>
 
-        <p>
-          <span>Exploitation des cookies :</span>
-          Voyons maintenant les attaques sur la gestion des identifiants.
-          <span>Credential Stuffing :</span>
+        <span>Credential Stuffing :</span>
 
+        <div class="txt">
           Une attaque Credential Stuffing est une technique brute force qui est basée sur l'utilisation d'identifiants
           compromis, d'identifiants contenus dans des bases de données piratées pour accéder à des
           comptes utilisateurs.<br>
@@ -714,13 +1080,25 @@
           régulièrement le même mot de passe pour différents comptes.
           Pour renforcer le brute-forcing, ils utilisent généralement des botnets (un ensemble de machines
           interconnectées qui sont composées de bot).
-
+        </div>
+        <div class="txt">
           La seule manière de se protéger de ceci est de ne pas réutiliser le même mot de passe, ou des mots de passe
           faibles très connus.
-          Ci-dessous un schéma montrant le fonctionnement de l'attaque par credential stuffing :
+        </div>
+
+        <div class="img-p">
+          <img src="img/ba/ba1.png" style="width:25rem">
+        </div>
+
+        <div class="txt" style="margin-top: 1rem;">
+          Ci-dessus un schéma montrant le fonctionnement de l'attaque par credential stuffing.<br>
           Le seul moyen de se protéger contre des attaques brute-force est d’implémenter une fonction qui limite le
           nombre d'essais par machines.
-          <span>Password Spraying :</span>
+        </div>
+
+        <span>Password Spraying :</span>
+
+        <div class="txt">
           Le password spraying est aussi une attaque basée sur du brute-force, mais, contrairement à l’attaque
           précédente où un
           hacker essayait différents noms de comptes et différents mots de passes, ici le hacker brute-force
@@ -728,33 +1106,40 @@
           comptes avec un mot de passe compromis ou connu.<br>
           Le but de cette attaque, à contrario avec la précédente, est d'être plus discret. En effet, de cette
           manière, l’attaquant se fera moins bloquer en attaquant une fois plusieurs comptes.
-          <br>
+        </div>
+        <div class="txt" style="margin-bottom: 1.2rem;">
           Voici les différents moyens pour renforcer les failles de type Broken Authentication et ainsi protéger les
-          sessions et les comptes des utilisateurs.
-        </p>
+          sessions et les comptes des utilisateurs :
+        </div>
 
         <h3><u>Broken authentication - Protection contre les failles</u></h3>
 
-        <span id=100>Control Session Length :</span>
-        <p>
+        <span>Control Session Length :</span>
+        <div class="txt">
           Toute application web qui gère des sessions devrait gérer le "temps de vie" des sessions de ses utilisateurs,
           de manière à ce que ne soit pas embêtant pour l’utilisateur tout en ayant un temps de vie relativement
           court pour limiter les risques de détournement de sessions.
-        </p>
+        </div>
+
         <span>Rotate and Invalidate Sessions IDs :</span>
-        <p>
+
+        <div class="txt">
           Toujours dans le but d’éviter l’usurpation de session, il est impératif de fermer une session une fois qu’elle
           est finie et donc supprimer les id liés à cette session pour faire en sorte qu’elle ne soit plus valide.
-        </p>
+        </div>
+
         <span>Don’t put Session IDs in URLs :</span>
-        <p>
+
+        <div class="txt">
           Une autre mauvaise pratique est de faire passer les id de sessions dans les url, qui pourraient ressembler à
-          ceci : <strong><a style="color: #23232e;" href="#100">http://badwebsite/jsessionid=1234</a></strong> .<br>
+          ceci : <a href="http://badwebsite/jsessionid=1234" target="_blank">http://badwebsite/jsessionid=1234</a><br>
           Si une application web utilise cette pratique, il est nécessaire de la modifier car un attaquant pourrait en
           profiter pour effectuer des attaques telles que Session ID Fixation ou Session ID URL Rewriting
-        </p>
+        </div>
+
         <span>Implement Multi Factor Authentication (MFA) :</span>
-        <p>
+
+        <div class="txt">
           Multi Factor Authentication ou plus souvent 2FA (Two Factor Authentication) est un dispositif qui demande deux
           système d’authentification différents lors de la demande d’accès au compte, par exemple en entrant
           identifiant et mot de passe, le site demande alors un deuxième token qui certifie que vous êtes la
@@ -763,35 +1148,67 @@
           les YubiKey, le numéro de téléphone, une passphrase supplémentaire, etc…<br>
           Au delà de renforcer l’accès au compte, cela permet aussi de protéger les données dans le cas de la
           compromission de la base de données de l’application web.
-        </p>
+        </div>
+
         <span>Don’t Permit Weak Passwords :</span>
-        <p>
+
+        <div class="txt">
           Il est aussi nécessaire de réguler le formulaire de création de mots de passes. Un mot de passe est considéré
           sécurisé s’il contient au minimum 8 caractères, un chiffre, une majuscule et un caractère spécial.
-        </p>
+        </div>
+
         <span>Don’t Store passwords in plaintext :</span>
-        <p>
+
+        <div class="txt">
           Un mot de passe ne doit jamais être enregistré dans une base de donnée en clair, il est toujours nécessaire de
           hasher ce mot passe avec un algorithme de hash sécurisé comme sha-512 par exemple.<br>
           Si les mots de passe étaient stockés en clair, dans le cas d’une brèche, les conséquences seraient terribles.
-        </p>
+        </div>
+
         <span>Use Breached Password Protection :</span>
-        <p>
+
+        <div class="txt">
           Il est possible et fréquent que des utilisateurs utilisent des mots de passes compromis, c'est-à-dire qui sont
           apparus dans une base de données récupérée par un hacker. Il est donc de bonne pratique de vérifier lors de la
           création d’un compte si le mot de passe fait partie des mots de passe compromis. Pour vérifier, il existe
           différents outils ou package qui offrent cette possibilité. Specops possède notamment une API qui permet cette
-          fonctionnalité. Il est également possible de regarder sur des sites comme "Have I been Pawned" : <strong><a
-              style="color: #23232e;" href="https://haveibeenpwned.com" target="_blank">haveibeenpwned.com</a></strong>
+          fonctionnalité. Il est également possible de regarder sur des sites comme "Have I been Pawned" : <a
+            href="https://haveibeenpwned.com" target="_blank">https://haveibeenpwned.com</a>
           pour s'assurer de
           la fiabilité de son adresse mail.
-        </p>
+        </div>
+
         <span>Implement Brute-Force Protection :</span>
-        <p>
+
+        <div class="txt">
           Il peut enfin être utile d’implémenter une protection contre le brute-force, en limitant le nombre d’essais
           par exemple.<br>
-          Librairies utiles pour renforcer l’appli web:
-        </p>
+          Librairies utiles pour renforcer l’appli web :
+        </div>
+
+        <table class="tableau">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Lien internet</th>
+              <th>Descriptif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>zxcvbn</td>
+              <td><a href="https://github.com/dropbox/zxcvbn" target="_blank">https://github.com/dropbox/zxcvbn</a></td>
+              <td>Barre de puissance du mot de passe</td>
+            </tr>
+            <tr>
+              <td>Pwned Passwords</td>
+              <td><a href="https://haveibeenpwned.com/API/v2#PwnedPasswords"
+                  target="_blank">https://haveibeenpwned.com/API/v2#PwnedPasswords</a></td>
+              <td>Vérification de mot de passe compromis</td>
+            </tr>
+          </tbody>
+        </table>
+
         <h3 style="margin-bottom:50px;"><u>Bonnes pratiques et stockage de mots de passes :</u></h3>
         <p style="margin-top:-20px;text-indent: 0;">
           Ne pas permettre les connexions qui ont accès au codes du site et qui peuvent être utilisés pour modifier les
@@ -801,8 +1218,8 @@
           Hacher les mots de passes avec une fonction de hachage modernes si possible ou des fonctions de hachage plus
           anciennes mais
           toujours sécurisées.<br>
-          En php: <strong><a style="color:#23232e;" href="https://www.php.net/manual/en/function.password-hash.php"
-              target="_blank">https://www.php.net/manual/en/function.password-hash.php</a></strong>
+          En php: <a href="https://www.php.net/manual/en/function.password-hash.php"
+            target="_blank">https://www.php.net/manual/en/function.password-hash.php</a>
         </p>
       </div>
     </div>
@@ -836,8 +1253,324 @@
       <div class="container-inside">
         <h3>Introduction :</h3>
         <p>
-
+          Une attaque XEE pour XML External Entities, parfois appelée attaque par injection XEE, est une vulnérabilité
+          touchant les programmes interprétant le langage XML. Elle se caractérise par la possibilité d’extraire des
+          fichiers du serveur web, et extraire les informations de ce dernier. Elle peut ainsi mettre en danger
+          celui-ci, en accédant, par exemple, à un fichier de configuration contenant des mots de passe, en copiant les
+          fichiers de la base de données ou en récupérant le code source d’une application. D’autres conséquences fortes
+          peuvent découler d’une attaque par XEE, comme la possibilité de réaliser des requêtes externes, des dénis de
+          service, des scans de ports …
         </p>
+
+        <span style="font-size:23px">XML et sa structuration :</span>
+
+        <div class="txt">
+          Dans le but de comprendre correctement XEE, nous allons voir quelques basiques de XML.
+          XML est un langage très populaire dans l’échange de données. On le retrouve notamment dans les web services
+          comme les API SOAP ou REST au même titre que du Json.<br>
+          Pour interpréter les données d’un fichier XML, il est
+          nécessaire pour une application de parser ces données pour obtenir son contenu et l’afficher selon sa
+          structure. La plupart des parseurs XML sont vulnérables par défaut aux attaques par injection XEE, ce qui rend
+          la vulnérabilité plus forte pour des développeurs non avertis.
+        </div>
+
+        <div class="txt">
+          Tous les éléments XML sont contenus dans des balises.<br>
+          <div class="hello1">&lt;foo&gt;</div>
+          <div class="hello" style="margin-bottom: -38px;text-indent: 0px;">Hello</div><br>
+          <div class="hello1">&lt;/foo&gt;</div>
+        </div>
+
+        <div class="txt">
+          Attardons-nous un instant sur la structure des fichiers XML. XML est un langage de balises ce qui sous-entend
+          que le contenu est séparé des instructions de structure du fichier. Il est ainsi possible de définir
+          proprement des blocs de construction et des entités dans un fichier séparé : DTD (pour Document Type
+          Definition).<br>
+          L’attaque par injection XEE opère sur le DTD. C’est pourquoi nous allons nous attarder sur cette notation. Un
+          DTD est lié au document XML en utilisant une déclaration DOCTYPE et pouvant être utilisé de deux manières
+          différentes : directement dans le fichier XML ou bien avec une référence externe faisant appel au fichier DTD.
+        </div>
+
+        <span style="font-size:23px">Un exemple de DTD :</span><br>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+          </div>
+          <div class="hello">
+            &lt;!DOCTYPE librairie [<br>
+            &lt;!ELEMENT encyclopedie (personne*)&gt;<br>
+            &lt;!ELEMENT personne (nom,prenom,publication+)&gt;<br>
+            &lt;!ATTLIST personne sexe (H | F) "H"&gt;<br>
+            &lt;!ELEMENT nom (#PCDATA)&gt;<br>
+            &lt;!ELEMENT prenom (#PCDATA)&gt;<br>
+            &lt;!ELEMENT publication (#PCDATA)&gt; ]&gt;
+          </div>
+        </div><br>
+
+        <div class="txt">
+          Ce DTD définit alors la version du document et la structuration des éléments qui vont le composer :
+        </div>
+        <div class="txt">
+          - Pour chacun des éléments, on définit sa composition par <strong>&lt;!ELEMENT nom_element
+            (structure)&gt;</strong><br>
+          - Pour chacun des attributs, on définit sa composition par <strong>&lt;!ATTLIST nom_element nom_attribut
+            (structure)&gt;</strong><br>
+          - L'attribut sexe de la balise <strong>&lt;personne&gt;</strong> est, ici, défini comme étant un choix imposé
+          entre "H" et "F".
+          Les valeurs possibles sont séparées par des caractères <strong>'|'</strong>. Cet attribut n'étant pas indiqué
+          comme
+          obligatoire, s'il n'est pas précisé alors il prendra par défaut la valeur "H" (la valeur précisée entre
+          guillemets après la liste)<br>
+          - <strong>personne*</strong> signifie que dans un élément <strong>&lt;encyclopedie&gt;</strong> on peut
+          trouver de 0 à plusieurs éléments de type <strong>&lt;personne&gt;</strong> à l'exclusion de tout autre
+          élément.<br>
+          - <strong>nom, prenom, publication+</strong> signifie que dans un élément personne on doit trouver un et un
+          seul <strong>(*)</strong> élément
+          <strong>&lt;nom&gt;</strong>, un et un seul élément <strong>&lt;prenom&gt;</strong> et un ou plusieurs
+          <strong>(+)</strong> éléments <strong>&lt;publication&gt;</strong> et dans cet ordre (comme
+          imposé par la virgule).<br>
+          - <strong>&lt;nom&gt;</strong>, <strong>&lt;prenom&gt;</strong> et <strong>&lt;publication&gt;</strong> sont
+          des éléments qui peuvent contenir du texte comme l'indique #PCDATA.
+        </div>
+
+        <div class="txt">
+          Ainsi, nous pourrons construire le fichier XML de telle sorte que les données respectent cette structure, en
+          faisant référence au DTD défini en « externe ».
+        </div>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+            &lt;!DOCTYPE encyclopdie SYSTEM "encyclopedie.dtd" [<br>
+          </div>
+          <div class="hello">
+            &lt;encyclopedie&gt;<br>
+            <div class="hello">
+              &lt;personne datenaissance="1942-01-08" sexe="H"&gt;<br>
+              &lt;nom&gt;HAWKING&lt;/nom&gt;<br>
+              &lt;prenom&gt;Stephen&lt;/prenom&gt;<br>
+              &lt;publication&gt;Une brève histoire du temps&lt;/publication&gt;<br>
+            </div>
+            &lt;/personne&gt;<br>
+            <div class="hello">
+              &lt;personne datenaissance="1932-07-13" sexe="H"&gt;<br>
+              &lt;nom&gt;REEVES&lt;/nom&gt;<br>
+              &lt;prenom&gt;Hubert&lt;/prenom&gt;<br>
+              &lt;publication&gt;L'Univers epliqué à mes enfants&lt;/publication&gt;<br>
+              &lt;publication&gt;Patience dans l'azur, L'évolution cosmique&lt;/publication&gt;<br>
+              &lt;publication&gt;Poussière d'étoiles&lt;/publication&gt;<br>
+            </div>
+            &lt;/personne&gt;<br>
+          </div>
+          <div class="hello1">
+            &lt;/encyclopdie&gt;
+          </div>
+        </div>
+
+        <p></p><br>
+
+        <h3><u>XXE - Exploitation des failles </u></h3>
+
+        <span>Billion laugh attack :</span>
+
+        <div class="txt">
+          Billion laugh attack est une attaque par déni de service (DoS). Il est possible alors pour l’attaquant de
+          démultiplier un élément afin de créer un flux de données très grand et rendre l’utilisation de
+          l’application impossible. Regardons un exemple de document XML qui peut être envoyé à la victime :
+        </div>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+          </div>
+          <div class="hello">
+            &lt;!DOCTYPE lolz [<br>
+            &lt;!ENTITY lol "lol")&gt;<br>
+            &lt;!ENTITY lol2 "&lol; &lol; &lol; &lol; &lol; &lol; &lol; &lol; &lol; &lol;"&gt;<br>
+            &lt;!ENTITY lol3 "&lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2;"&gt;<br>
+            &lt;!ENTITY lol4 "&lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3;"&gt;<br>
+            &lt;!ENTITY lol5 "&lol4; &lol4; &lol4; &lol4; &lol4; &lol4; &lol4; &lol4; &lol4; &lol4;"&gt;<br>
+            &lt;!ENTITY lol6 "&lol5; &lol5; &lol5; &lol5; &lol5; &lol5; &lol5; &lol5; &lol5; &lol5;"&gt;<br>
+            &lt;!ENTITY lol7 "&lol6; &lol6; &lol6; &lol6; &lol6; &lol6; &lol6; &lol6; &lol6; &lol6;"&gt;<br>
+            &lt;!ENTITY lol8 "&lol7; &lol7; &lol7; &lol7; &lol7; &lol7; &lol7; &lol7; &lol7; &lol7;"&gt;<br>
+            &lt;!ENTITY lol9 "&lol8; &lol8; &lol8; &lol8; &lol8; &lol8; &lol8; &lol8; &lol8; &lol8;"&gt;<br>
+            &lt;!ENTITY lol10 "&lol9; &lol9; &lol9; &lol9; &lol9; &lol9; &lol9; &lol9; &lol9; &lol9;"&gt;<br>
+          </div>
+          <div class="hello1">
+            ]&gt;<br>
+            &lt;lolz&gt;&lol10;&lt;/lolz&gt;
+          </div>
+        </div>
+
+        <span></span>
+        <div class="txt">
+          On remarque ici la notation <strong>&lol10</strong> : c’est en réalité la valeur de l’entité définie dans le
+          DTD.<br>
+          Le parseur va alors au départ afficher les 10 valeurs de l’entité lol10, soit 10 fois lol9. Puis pour chaque
+          valeur lol9, le parseur affichera 10 valeurs lol8. Ce pattern va ainsi se répéter jusqu'à atteindre la
+          première entité.
+          C’est alors exponentiel, d’où l’appellation « Billions laugh attack », car des milliards d’instances du
+          string « lol » sont alors créées, surchargeant la mémoire du parseur et créant alors un Dos du système.
+        </div>
+
+        <span>External Entity Attack :</span>
+
+        <div class="txt">
+          Comme nous l’avons vu précédemment, il est possible de créer un fichier DTD “externe” au document XML. Cela
+          offre la possibilité à un attaquant d’envoyer des requêtes qu’il aurait créé en amont en modifiant l’URI du
+          DTD, et ainsi permettant de récupérer des ressources locales, comme un fichier de mot de passe dans l’exemple
+          ci-dessous.
+        </div>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+          </div>
+          <div class="hello">
+            &lt;!DOCTYPE encyclopedie [<br>
+            &lt;!ELEMENT encyclopedie ANY&gt;<br>
+            &lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;<br>
+          </div>
+          <div class="hello1">
+            ]&gt;<br>
+            &lt;encyclopedie&gt;&xxe;&lt;/encyclopedie&gt;
+          </div>
+        </div>
+
+        <div class="txt">
+          Le document alors généré par ce code XML et retourné à l’attaquant incorporera les mots de passes du fichier
+          /etc/passwd de l’application (grâce à l’utilisation de &xxe).<br>
+          Bien évidemment, si l’attaquant connaît la structure des chemins de l’application, il peut récupérer d’autres
+          fichiers, écrire des commandes d’exécution, scanner des ports, ou bien même créer de requêtes HTTP sur le
+          réseau local selon le parseur utilisé par la victime.
+        </div>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+          </div>
+          <div class="hello">
+            &lt;!DOCTYPE encyclopedie [<br>
+            &lt;!ELEMENT encyclopedie ANY &gt;<br>
+            &lt;!ENTITY xxe SYSTEM "file:///c:/boot.ini"&gt;]&gt;<br>
+          </div>
+          <div class="hello1">
+            ]&gt;<br>
+            &lt;encyclopedie&gt;&xxe;&lt;/encyclopedie&gt;
+          </div>
+        </div>
+
+        <br>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+          </div>
+          <div class="hello">
+            &lt;!DOCTYPE encyclopedie [<br>
+            &lt;!ELEMENT encyclopedie ANY &gt;<br>
+            &lt;!ENTITY xxe SYSTEM "http://192.168.0.1/secret.txt"&gt;]&gt;<br>
+          </div>
+          <div class="hello1">
+            ]&gt;<br>
+            &lt;encyclopedie&gt;&xxe;&lt;/encyclopedie&gt;
+          </div>
+        </div>
+
+        <br>
+
+        <div class="txt">
+          <div class="hello1">
+            &lt;?xml version="1.0"?&gt;<br>
+          </div>
+          <div class="hello">
+            &lt;!DOCTYPE encyclopedie [<br>
+            &lt;!ELEMENT encyclopedie ANY &gt;<br>
+            &lt;!ENTITY xxe SYSTEM "http://localhost:99"&gt;]&gt;<br>
+          </div>
+          <div class="hello1">
+            ]&gt;<br>
+            &lt;encyclopedie&gt;&xxe;&lt;/encyclopedie&gt;
+          </div>
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Pour plus d’exemples d'injection XXE, il existe un github répertoriant des exemples de XML malicieux à
+          injecter :<br>
+          <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection"
+            target="_blank">https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection</a>
+        </div>
+
+        <span></span>
+
+        <h3><u>XXE - Protection contre les failles </u></h3>
+
+        <span>Quand sommes-nous vulnérables ?</span>
+
+        <div class="txt" style="text-align: left;">
+          - Les interpréteurs XML dans l’application acceptent les DTD.<br>
+          - Les interpréteurs XML acceptent les entités externes.<br>
+          - L’application accepte des modifications XML, notamment de sources externes non identifiées.
+        </div>
+
+        <span>Deactivate DTD :</span>
+
+        <div class="txt">
+          Le meilleur moyen pour se défendre contre tous les types d’injections XEE est de simplement désactiver les
+          DTD.
+          Si cela n’est pas possible, il suffit d’update la librairie de son interpréteur XML, car les nouvelles
+          versions de ces librairies désactivent automatiquement les DTD et les entités externes.
+        </div>
+        <div class="txt">
+          Par exemple, si on utilise XmlDocument, voici comment désactiver les DTD :<br>
+          <strong>XmlDocument doc = new XmlDocument();</strong><br>
+          <strong>doc.XmlResolver = null;</strong>
+        </div>
+
+        <div class="txt">
+          Une liste des différentes fonctionnalités à ajouter au code selon tous les parseurs existants est disponible
+          ici :<br>
+          <a href="https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html"
+            target="_blank">https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html</a>
+        </div>
+
+        <span>Set max characters :</span>
+
+        <div class="txt">
+          Pour se défendre contre les DoS, notamment « Billion lauth attack », il est possible d’ajouter une valeur
+          maximum des entités externes. Ci-dessous un exemple avec XmlReader :<br>
+          <strong>settings.MaxCharactersFromEntities = 1024;</strong>
+        </div>
+        <div class="txt">
+          On peut également ajouter dans le code une valeur Timeout de la requête entrante et sortante, afin d'éviter un
+          temps d’attente trop long de la réponse et éviter un DoS.
+        </div>
+
+        <span>Block URIs :</span>
+
+        <div class="txt">
+          Il est possible de bloquer les URI localhost telles que <strong>http://localhost</strong>,
+          <strong>http://127.0.0.1</strong>, et <strong>file://</strong> URIs.
+          En utilisant notamment des fonctions telles que IsLoopback, on peut contrôler les flux DTD.<br>
+          Dans un cas général, il est possible d’ajouter des filtres whitelist dans son code et une validation des
+          entrées côté serveur afin de ne laisser passer que les documents XML souhaités.
+        </div>
+
+        <span></span>
+
+        <span>Bonnes pratiques :</span>
+
+        <div class="txt" style="text-align: left;">
+          - Patcher/Upgrade les librairies et parseurs XML le plus souvent possible. <br>
+          - Limiter la mémoire et les ressources du parseur XML. <br>
+          - Vérifier si les entrées XML sont contrôlées avant parsing. <br>
+          - Vérifier si les entités externes sont autorisées. <br>
+          - Vérifier si les DTD sont autorisés par le parseur et si oui, ceux qui le sont ne doivent jamais être
+          construits par des utilisateurs non définis.
+        </div>
       </div>
     </div>
 
@@ -853,8 +1586,267 @@
       <div class="container-inside">
         <h3>Introduction :</h3>
         <p>
-
+          Il est tout d’abord nécessaire de comprendre la différence entre les failles Broken Access Control et les
+          failles Broken Authentication vues précédemment. Prenons un exemple afin de comprendre ce qui les différencie
+          :
         </p>
+        <p>
+          Imaginons une simple application web non sécurisée qui possède un tableau de bord administrateur exposé sans
+          mécanisme d’authentification. Ici, c’est un problème de Broken Authentication, car le besoin
+          d’authentification
+          pour accéder à des données sensibles n’est pas implémenté.
+        </p>
+        <p>
+          Par contre, si cette fois ci il y a bien un mécanisme d’authentification, mais qu’il est toujours possible
+          d’accéder à ce tableau d’abord en étant authentifié en tant qu’utilisateur classique alors c’est un problème
+          de Broken Access Control.
+        </p>
+        <p>
+          Concrètement, ce sont des failles où les contrôles d’accès ne sont pas bien implémentés et permettent ainsi à
+          des utilisateurs d’accéder à des ressources auxquelles ils ne devraient pas avoir accès.<br><br>
+          Voici quelques vulnérabilités liées aux contrôles d'accès qu’il est commun de retrouver.
+        </p>
+
+        <h3><u>Broken Access Control - Failles</u></h3>
+
+        <span>IDOR - Insecure Direct Object Reference :</span>
+
+        <div class="txt">
+          IDOR ou Insecure Direct Object Reference est un faille qui intervient lorsqu’un site web utilise des inputs
+          fournis par l’utilisateur pour accéder à des ressources. Cette faille est souvent associée à des élévations de
+          privilèges horizontal, mais elle peut être également liée à des élévations de privilèges vertical.<br>
+        </div>
+        <div class="txt">
+          Une élévation de privilège horizontal désigne le fait qu’un utilisateur quelconque accède au contenu d’un
+          autre utilisateur quelconque.<br>
+        </div>
+        <div class="txt">
+          Une élévation de privilège vertical quant à elle désigne le fait qu’un utilisateur avec des privilèges
+          moindres accède à du contenu, des fonctions ou des applications d’un utilisateur qui possède plus de
+          privilèges.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Voici l'exemple d’une vulnérabilité IDOR en faisant une référence directe à un objet d’une base de
+          données.<br>
+          Imaginons un site qui utilise l'adresse suivante pour accéder à la page du compte du client en récupérant des
+          données de la base de données :
+        </div>
+
+        <div class="hello">
+          https://bad-website.com/customer_account?customer_number=132355
+        </div>
+
+        <div class="txt" style="margin-top: 1rem;">
+          Dans la requête, on remarque ce paramètre <strong>“customer_number”</strong>, suivi d’un nombre. Il est
+          possible de modifier ce
+          nombre pour avoir accès à la page d’un autre compte et ceci représente une faille IDOR, car on fait
+          directement
+          référence à une ressource à laquelle on ne devrait pas pouvoir accéder. Ici, cette vulnérabilité démontre un
+          exemple d’élévation de privilèges horizontal.
+        </div>
+
+        <div class="txt">
+          En remplaçant donc le <strong>customer_number</strong> de <strong>132355</strong> par <strong>123456</strong>,
+          on obtient la requête http suivante :
+        </div>
+        <div class="hello">
+          https://bad-website.com/customer_account?customer_number=123456
+        </div>
+        <div class="txt" style="margin-top: 1rem;">
+          Et en partant du principe que c’est un numéro de compte valide, on obtient alors accès au compte et donc à
+          certaines informations qui peuvent être sensibles.
+        </div>
+
+        <span></span>
+
+        <span>CSRF - Client-Side Request Forgery :</span>
+
+        <div class="txt">
+          Une attaque CSRF est une attaque qui a pour but de manipuler un navigateur web à effectuer une action non
+          voulue sur une application web où un utilisateur est connecté.
+        </div>
+        <div class="txt">
+          L’impact de cette dernière peut engendrer des conséquences dévastatrices pour l’utilisateur. Elle permet par
+          exemple de voler des données sensibles ou des cookies de sessions, d’effectuer des transferts d'argent, de
+          supprimer des comptes, etc…
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Imaginons une application web d’achats en ligne, un utilisateur peut généralement créer un compte, le
+          supprimer, ajouter des adresses de livraison ou de facturation,ajouter une carte bancaire etc..
+        </div>
+        <div class="txt">
+          Imaginons maintenant qu’un utilisateur décide de supprimer son compte, il se connectera à son compte et dans
+          les paramètres, il cliquera sur le bouton “Supprimer votre compte”.<br>
+          Dans le code, appuyer sur ce bouton effectue une requête http au serveur et exécute le code nécessaire à
+          l’action demandée, du type :
+        </div>
+
+        <div class="hello">
+          POST /supprimer_compte HTTP/1.1
+        </div>
+
+        <div class="txt" style="margin-top: 1rem;">
+          Jusqu’ici c’est un comportement classique et sain d’un serveur http et son client.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Cependant, si maintenant, un attaquant décide de supprimer le compte d’une victime qui ne veut pas supprimer
+          son
+          compte du site, il peut utiliser une attaque CSRF.
+        </div>
+
+        <div class="img-p">
+          <img src="img/bac/bac1.png" style="width:25rem;">
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          A l’aide du schéma ci-dessus, on peut voir les étapes de cette attaque.<br>
+        </div>
+        <div class="txt">
+          Tout d’abord, la victime se connecte à son site d’achats en ligne préférés.
+          L’attaquant va “forger” (construire de toute pièce) un hyperlien qui fait référence à la requête de
+          suppression
+          de compte vu précédemment.<br>
+        </div>
+        <div class="txt">
+          Il va ensuite l’envoyer à sa victime, et lorsque celle-ci cliquera sur l’hyperlien, la requête va s’envoyer au
+          serveur. Etant donné que la victime est connectée à l’application, la requête s’envoie au serveur de
+          l’application web et effectue l’action associée, en l'occurrence la suppression du compte.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Il est également possible pour l’attaquant de leurrer ses victimes sur un site qu’il possède et qui paraît
+          légitime , pour leur faire cliquer sur des hyperliens cachés dans le but d'exécuter ses requêtes, au lieu de
+          directement envoyer l’hyperlien à la victime.
+        </div>
+        <div class="txt">
+          Pour résumer CSRF, Cross Site Request Forgery désigne le fait de forger une requête valide pour un serveur
+          dans le but d’atteindre les ressources associés à un utilisateur qui est connecté à ce dit serveur.
+        </div>
+
+        <span>Path Traversal</span>
+
+        <div class="txt">
+          Path traversal ou directory traversal est une attaque qui consiste à se déplacer dans l'arborescence dans un
+          site pour atteindre des ressources qui ne devraient pas être accessibles normalement.
+        </div>
+
+        <div class="txt">
+          On pourrait imaginer voir sur un site différentes pages comme port scanners, traceroute,
+          etc…
+        </div>
+
+        <div class="txt">
+          Ainsi, en imaginant que nous soyons sur un site appelé <strong
+            style="cursor: default;">jeandupont.org</strong>, alors par exemple si on vient scanner les ports, on aura
+          une URL du type : <br><strong style="cursor: default;">jeandupont.org/port_scanner</strong>
+        </div>
+
+        <div class="txt">
+          Le directory traversal se base sur principe, imaginons un site avec une requête GET dans l’URL, il est
+          possible de rentrer en valeur du paramètre un chemin qui pourrait donner accès à des ressources qui ne
+          devraient pas l’être.
+        </div>
+
+        <div class="txt">
+          Par exemple, prenons un blog de cuisine qui possède beaucoup de recettes différentes : imaginons qu’il est
+          possible
+          de rechercher une recette, on aura alors une requête qui ressemble à la suivante :
+        </div>
+
+        <div class="hello" style="margin-top: -0.7rem;">
+          https://cusinemeilleurblog/?recipe=polenta
+        </div>
+
+        <div class="txt">
+          Un attaquant peut décider de rentrer un chemin qu’il aurait pu identifier à l’aide d’outils comme dirsearch ou
+          dirbuster afin d’accéder à des ressources normalement inaccessibles, il peut alors essayer de rentrer l’URL
+          suivante et ainsi avoir accès au mot de passe du compte admin :
+        </div>
+
+        <div class="hello" style="margin-top: -0.7rem;">
+          https://cusinemeilleurblog/?recipe=../admin/backup_mdp/.htpasswd
+        </div>
+
+        <span></span>
+
+        <h3><u>Broken Access Control - Protection contre les failles</u></h3>
+
+        <p>
+          Se protéger de ce type d’attaque et renforcer ces vulnérabilités peut être très complexe, car il existe une
+          infinité de scénarios différents, ce qui rend très difficile de tout protéger efficacement.
+          De nos jours, la plupart des frameworks de développement web possèdent des mécanismes de défense.
+        </p>
+
+        <span>Génération de tokens sécurisés :</span>
+
+        <div class="txt">
+          Par exemple, Laravel, un framework PHP, refuse de laisser un formulaire sans la présence d’un token CSRF. Il
+          affiche une erreur et refuse d'exécuter le code sans la présence de ce token.<br>
+          Un token est une chaîne de caractères et de nombre aléatoires qui ressemble généralement à un hash md5:
+        </div>
+
+        <div class="hello" style="margin-top: -0.7rem;">
+          1cdaf5dfb46fc4f2bcd0e70225fd69d7
+        </div>
+
+        <div class="txt">
+          Ce token est ensuite appelé dans toutes les pages du site. Pour générer ce genre de token, il existe des
+          fonctions en php, la fonction ci-dessous est par exemple considérée sécurisée :
+        </div>
+        <div class="hello" style="margin-top: -0.4rem;">
+          md5(bin2hex(openssl_random_pseudo_bytes(6)));
+        </div>
+        <div class="txt">
+          La fonction <strong>openssl_random_pseudo_bytes</strong>, de son côté, retourne une chaîne pseudo-aléatoire
+          d’octets de taille 6.<br>
+          La fonction <strong>bin2hex</strong> convertit ensuite ce chiffre en hexadécimal et md5() hash le contenu en
+          utilisant l’algorithme md5.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Voici le code en PHP :
+        </div>
+
+        <div class="hello1">
+          &lt;?php<br>
+        </div>
+        <div class="hello">
+          if (!isset($_SESSION['jeton'])) {<br>
+          $_SESSION['jeton'] = bin2hex(openssl_random_pseudo_bytes(6));<br>
+        </div>
+        <div class="hello1">
+          }<br>
+          ?&gt;
+        </div>
+
+        <div class="txt">
+          Ce code signifie que si un jeton n’existe pas pour la session, on en génère un.
+        </div>
+
+        <span>Ne pas afficher les IDs :</span>
+
+        <div class="txt">
+          Il est aussi nécessaire que les développeurs n’affichent pas dans les paramètres des URL des données clés ou
+          privées comme par exemple l’ID d’un compte client.<br>
+          Il est encore et toujours nécessaire d’effectuer des validations d’entrées des utilisateurs pour filtrer des
+          entrées malicieuses.
+        </div>
+
       </div>
     </div>
 
@@ -870,8 +1862,180 @@
       <div class="container-inside">
         <h3>Introduction :</h3>
         <p>
-
+          La configuration de la sécurité d’un serveur, d’une application web ou n’importe quel élément de type
+          client-serveur est un élément fondamental. Si on part du principe que chaque utilisateur est potentiellement
+          malfaisant, alors il faut être certain que chaque fonction, chaque attribut, chaque entrée sont bien
+          configurés de manière à ne donner à l’utilisateur que les privilèges auxquels il a droit, en se basant sur la
+          règle du « Least Privileges ».
         </p>
+        <p>
+          La mauvaise configuration de la sécurité peut survenir dans n’importe quel niveau d’un système. On peut en
+          trouver dans les services réseau, dans un serveur web, dans un serveur d’application, dans une base de
+          données, un framework, du code personnalisé, ou encore dans des machines virtuelles préinstallées.
+        </p>
+        <p>
+          C’est pourquoi la mauvaise configuration de la sécurité de n’importe quelle plateforme peut avoir des
+          conséquences désastreuses dans beaucoup de domaines, que ce soit la divulgation d’informations personnelles
+          (adresse, coordonnées bancaires…), la création de comptes malicieux ayant tous les droits, et cela peut aller
+          jusqu’à la destruction des données au sein d’une base de données, menant potentiellement à la perte de
+          milliers voir de millions d’informations pour les bases noSQL des très grands groupes.
+        </p>
+        <p>
+          Ainsi, la règle de Security Misconfiguration se base plus sur les bonnes pratiques de configuration, de
+          restriction d’accès, de sécurisation d’inputs, d’utilisation de comptes administrateurs… En clair, cette
+          partie s’axe sur des conseils et des façons de faire permettant de mettre en place un serveur / une base de
+          données / une application Web sécurisé(e) en évitant au maximum de laisser la place à des failles.
+        </p>
+        <p>
+          Pour finir, il faut savoir qu’il existe des scanners automatiques permettant de détecter ces mauvaises
+          configurations, en essayant une grande quantité d’actions sur l’application en question, par exemple l’essai
+          de connexion sur les utilisateurs par défaut, des services inutiles qui sont quand même installés… Cependant,
+          il convient de bien configurer la sécurité par soi-même, et la partie suivante va vous aider dans cette tâche.
+        </p>
+
+        <div class="img-p">
+          <img src="img/sm/sm1.jpg" style="width:25rem;">
+        </div>
+
+        <span></span>
+
+        <h3><u>Security Misconfiguration - Attaques / failles</u></h3>
+
+        <span>Default credentials :</span>
+
+        <div class="txt">
+          Cette faille de sécurité est généralement la première à être exploitée par une personne malveillante. Cela
+          concerne par exemple, lorsque de la mise en place d’une base de données via PHPMyAdmin, de laisser
+          l’utilisateur <strong>root</strong> par défaut, ou alors de créer un compte avec <strong>user : admin</strong>
+          et <strong>mot de passe : admin</strong>. <br>
+          Il faut à tout prix soit désactiver ou supprimer les comptes par défaut, ou au minimum modifier les valeurs
+          attribuées au nom d’utilisateur et au mot de passe. Généralement, ces comptes peuvent être désactivés en mode
+          administrateur, ce qui est conseillé de faire étant donné la trivialité de la faille.
+        </div>
+
+        <span>Default Administration Interface / Ports :</span>
+
+        <div class="txt">
+          Laisser ouvert des ports permettant la connexion de diverses manières (Telnet, SSH…) peut permettre à un
+          hacker de prendre avantage de la sécurité en modifiant les accès administrateurs et le contrôle sur
+          l’application.
+        </div>
+
+        <span>Debugging Enabled :</span>
+
+        <div class="txt">
+          Le debugging est largement utilisé dans la phase de développement d’une application par les entreprises qui
+          les conçoivent. Extrêmement utile pour les développeurs qui peuvent avoir des « verbose errors », qui sont en
+          fait des compilations des noms des exceptions qui ne sont pas gérées associées au chemin des erreurs associées
+          (nom de la fonction où se situe l’erreur, élément qui a crashé, type d’erreur…).<br>
+          Le fait d’oublier de désactiver ce debugging peut permettre à des utilisateurs malveillants de voir les
+          différentes
+          erreurs qui surviennent, et ainsi de se faire une idée, si ce n’est du fonctionnement de l’application
+          complète,
+          au-moins de l’architecture globale de celle-ci.
+        </div>
+        <div class="txt">
+          Voici un exemple de verbose obtenu sur IntelliJ dans une application
+          Spring en Java :
+        </div>
+
+        <div class="img-p">
+          <img src="img/sm/sm2.JPG" style="width:35rem;">
+        </div>
+
+        <span>Incorrect Permissions :</span>
+
+        <div class="txt">
+          Cette faille concerne une mauvaise configuration des permissions accordées à des directories publics ou à des
+          consoles avec des droits d’administrateur par exemple. C’est via cette erreur que des hackeurs peuvent avoir
+          accès à des fichiers non autorisés. La partie sur les permissions incorrectes est étroitement corrélée avec la
+          partie Broken Authentication, que vous êtes invités à aller regarder si vous souhaitez approfondir le sujet.
+        </div>
+
+        <span>Directory Listing Enabled :</span>
+
+        <div class="txt">
+          Imaginons que la liste des répertoires <strong>(directory listing)</strong> n’est pas désactivée sur un
+          serveur. Si un hackeur
+          découvre qu’il peut simplement lister les répertoires pour trouver n’importe quel fichier, il va essayer de
+          trouver et télécharger toutes les classes compilées. Dans un second temps, il pourrait très bien les
+          décomposer, comprendre les fonctions et les réutiliser à son avantage pour exploiter une faille de
+          contrôle d’accès dans l’application.
+        </div>
+
+        <span>Cloud Misconfiguration :</span>
+
+        <div class="txt">
+          De plus en plus d’entreprises ont recours au cloud, qui est en pleine expansion depuis plusieurs années,
+          mettant en avant la facilité d’accès à des serveurs possédant de grandes capacités de stockage, très rapides
+          et décentralisés (généralement entretenus par des entreprises tierces). Cependant, ces centres contenant des
+          données sensibles il est nécessaire de bien les configurer.
+        </div>
+        <div class="txt">
+          Un firewall d’application web mal configuré peut faire office de porte d’entrée aux hackers, en ne protégeant
+          pas l’application contre les problèmes d’authentification.
+        </div>
+        <div class="txt">
+          L’utilisation de services tierces ou d’applications hébergées dans d’autres systèmes (et donc pas connues)
+          peuvent également causer des problèmes.
+        </div>
+        <div class="txt">
+          Lorsqu’une entreprise possède des VMs et que certaines d’entre elles ne sont plus ou très peu utilisées, elles
+          peuvent être oubliées dans les patchs de correctifs de sécurité et ainsi devenir des cibles potentielles de
+          hackeurs, surtout si le cloud est chargé, offrant une mauvaise visibilité de ce qui se trouve dans le Cloud
+          par les personnes qui l’entretiennent.
+        </div>
+        <div class="txt">
+          Enfin, si un fournisseur de service Cloud a laissé les permissions de partage disponibles par Internet aux
+          utilisateurs, cela signifie que des données potentiellement sensibles stockées dans la base du Cloud sont
+          accessibles par n’importe quel utilisateur.
+        </div>
+
+        <span>Software Out Of Date / Sample Applications</span>
+
+        <div class="txt">
+          Cette vulnérabilité de Software Out Of Date permet à un hackeur de savoir si un logiciel n’est pas à jour, ou
+          s’il est dans une version dont on connait une faille. Elle peut être combinée à la faille Sample Applications,
+          qui concerne par exemple un serveur d’application dont certaines applications de test / exemple n’ont pas été
+          retirées lors de la mise en production.
+        </div>
+        <div class="txt">
+          Ces dites applications aidaient les développeurs à tester des morceaux
+          de code et, si elles utilisent des logiciels qui ne sont pas à jour, ou si elles possèdent des failles
+          connues, alors un hackeur peut essayer de trouver un problème et l’utiliser à son avantage.
+        </div>
+
+        <span></span>
+
+        <h3><u>Security Misconfiguration - Protection contre les failles</u></h3>
+
+        <p>
+          Ainsi vous l’aurez compris, concernant les bonnes habitudes à avoir pour se défendre contre la mauvaise
+          configuration, il faut simplement… Bien configurer tous les éléments de son serveur d’application. Si on
+          reprend dans l’ordre les éléments d’attaque qui ont été donnés, il faut donc :
+        </p>
+
+        <div class="txt">
+          - Changer les comptes / mots de passe par défaut voire les supprimer (via un panel d’administration ou
+          directement dans le code suivant le logiciel utilisé).<br>
+          - Désactiver les interfaces d’administration, désactiver les ports par défaut pour connexion et en utiliser
+          d’autres (il en existe 65.535).<br>
+          - Désactiver l’utilisation du debuggage ou alors attribuer des droits différents à un utilisateur lambda afin
+          qu’il ne puisse pas y avoir accès.<br>
+          - Configurer le serveur pour éviter des accès non autorisés, des privilèges mal fournis ou du directory
+          listing.<br>
+        </div>
+
+        <span>Scans automatiques :</span>
+
+        <div class="txt">
+          Il existe également des scanners automatiques conseillés par le site OWASP permettant de scanner son code. Il
+          est également possible de faire des audits auprès d’entreprises spécialisées dans la sécurité / la cyber
+          sécurité afin de comprendre la topologie du système, de connaitre les patchs à appliquer, de voir où se
+          trouvent de potentielles failles (ce n’est pas parce qu’un système n’a jamais été attaqué qu’une faille
+          n’existe pas).
+        </div>
+
       </div>
     </div>
 
@@ -887,8 +2051,461 @@
       <div class="container-inside">
         <h3>Introduction :</h3>
         <p>
-
+          XSS ou Cross-Site Scripting est une vulnérabilité web qui a pour but d’injecter des scripts javascript par le
+          biais d’un formulaire ou dans les requêtes http sur une page web ou sur n’importe quel élément html dans
+          lequel
+          on peut y entrer des inputs, dans le but de compromettre toutes les actions que les utilisateurs peuvent avoir
+          sur le site victime. Cette attaque peut causer différents problèmes, comme l'exécution de code arbitraire ou
+          le vol d’informations critiques (données de carte bancaire, adresses mail, mots de passe, identifiants de
+          connexion, etc…).
         </p>
+        <p>
+          Le schéma ci-dessous explique plus clairement les étapes qui peuvent composer une attaque XSS, ces étapes
+          peuvent êtres sensiblement modifiées selon la vulnérabilité exploitée. Il s’agit ici d’une vulnérabilité
+          Reflected XSS, les différentes vulnérabilités XSS seront expliquées par la suite.
+        </p>
+
+        <div class="img-p">
+          <img src="img/xss/xss1.jpg" style="width:25rem;">
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          On peut retrouver 3 catégories dans cette attaque qui ont chacune leurs spécificités :
+        </div>
+
+        <span>● <u>Reflected XSS :</u></span>
+
+        <div class="txt">
+          Reflected XSS est la vulnérabilité la plus simple parmi les 3 citées. Elle a lieu lorsqu’un attaquant manipule
+          une requête HTTP et y insère du code malicieux.
+          Par exemple, supposons un site web qui propose de pouvoir effectuer une recherche :
+        </div>
+
+        <div class="hello" style="margin-top: -0.4rem;">
+          https://insecure-website.com/search?term=gift
+        </div>
+
+        <div class="txt">
+          Imaginons que nous rentrons le terme “gift” pour notre recherche, le site affichera alors le texte suivant:
+        </div>
+
+        <div class="hello" style="margin-top: -0.4rem;">
+          &lt;p&gt; You searched for : gift &lt;/p&gt;
+        </div>
+
+        <div class="txt">
+          Pour l’instant rien d'extraordinaire, mais si le site n’effectue pas d’opérations de validation sur cet input,
+          alors un hacker peut en profiter pour rentrer du code javascript malicieux.<br>
+          La requête précédente pourrait donc devenir la suivante:
+        </div>
+
+        <div class="hello">
+          https://insecure-website.com/search?search=&lt;script&gt; /* Vol de cookies */ &lt;/script&gt;
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          De ce fait, si un autre utilisateur utilise cette requête html alors le hacker récupérera les cookies de
+          sessions de cet utilisateur.
+          Il suffit que le hacker poste un message sur les réseaux sociaux : “Regardez cette superbe réplique de
+          l’anneau du seigneur des anneaux, elle n’est pas super chère et c’est de l’or blanc gravé !! :
+          <strong style="cursor: default;">https://insecure-website.com/search?search= &lt;script&gt; /* Vol de cookies
+            */ &lt;/script&gt; “</strong>
+        </div>
+
+        <div class="txt">
+          Les gens intéressés par l’article qui cliqueront sans faire attention se feront avoir.
+          Vous l’aurez compris, l’impact d’une telle vulnérabilité est plutôt important : si l’attaquant arrive à faire
+          s'exécuter le script dans le navigateur de la victime, il peut complètement compromettre la victime.
+        </div>
+
+        <span></span>
+
+        <div class="txt" style="text-align: left;">
+          Comment trouver cette vulnérabilité ? Plusieurs solutions existent :<br>
+          - Tester toutes les zones d’input, il faut tester séparément toutes les zones d’entrées où l’on peut effectuer
+          une requête http sur le site web.<br>
+          - Pour chaque point d'entrée, entrer des valeurs alphanumériques aléatoires, une suite de 8 caractères
+          alphanumériques est une bonne pratique pour tester si cette chaîne de caractères est reflétée sur le site ou
+          non.<br>
+          - Après avoir entré les valeurs, vérifier où est reflétée la chaîne de caractères, il faut savoir si c’est
+          dans des balises de textes, dans des listes, dans des balises de scripts, etc…, pour comprendre dans quel
+          contexte le script pourrait s'exécuter.<br>
+          - Si votre premier test d’attaque XSS est bloqué ou modifié par le navigateur, essayez différentes charges
+          utiles, il n’y a pas qu’un seul moyen d'exécuter des scripts.
+        </div>
+
+        <span>● <u>DOM XSS :</u></span>
+
+        <div class="txt">
+          DOM XSS, pour Domain Object Model based XSS, est une attaque XSS qui vise directement le DOM d’un site web en
+          y injectant du code malicieux ou en le modifiant d’une quelconque manière qui profiterait à l’attaquant.
+          Le DOM est la représentation des objets qui constituent l’architecture et le contenu d’une page web. Le DOM
+          permet de lier la programmation d’une page web avec l’apparence et l’architecture de cette page web.<br>
+          Un attaquant peut utiliser différents objets DOM pour créer une attaque XSS.
+          Généralement, les objets <strong>document.url</strong>, <strong>document.location</strong> et
+          <strong>document.referrer</strong> sont utilisés pour réaliser ces
+          attaques.<br>
+          L’exemple suivant explique une attaque DOM XSS basique.
+        </div>
+        <div class="txt">
+          Imaginons une page web personnalisée en fonction du nom d’utilisateur, le code de la page web est le suivant :
+        </div>
+
+        <div class="hello1">
+          &lt;html&gt;<br>
+          &lt;head&gt;<br>
+          &lt;title&gt;Page personnalisée&lt;/title&gt;<br>
+          .......<br>
+          &lt;/head&gt;<br>
+        </div>
+        <div class="hello">
+          &lt;script&gt;<br>
+          var pos = document.URL.indexOf(“context=”)+8;<br>
+          document.write(document.URL.substring(pos,document.URL.length));<br>
+        </div>
+        <div class="hello1">
+          &lt;/script&gt;<br>
+          .......<br>
+          &lt;/html&gt;
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Si l’utilisateur Marie a une page personnalisée sur ce site, l’url de sa page sera :
+        </div>
+
+        <div class="hello" style="margin-top: -0.4rem;">
+          http://www.example.com/userdashboard.html?context=Marie
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Maintenant imaginons une attaque DOM-based XSS, elle pourra être exécutée de la manière suivante :
+        </div>
+
+        <div class="hello" style="margin-top: -0.4rem;">
+          http://www.example.com/userdashboard.html?context=&lt;script&gt; Malicious Code &lt;/script&gt;
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Le navigateur de la victime reçoit l’URL, commence à construire le DOM et parse l’URL. Le navigateur parse la
+          page Html, atteint le premier script, et extrait le code malicieux contenu dans <strong>“context”</strong>.
+          Une fois extrait, le navigateur l’ajoute à la page dans le DOM, le comprend comme du code javascript et
+          l’exécute.
+        </div>
+        <div class="txt">
+          A la différence de l’attaque précédente, l’attaque modifie le DOM de la page pour exécuter le code malicieux
+          et n’est cette fois-ci pas directement inscrit dans le code source de la page. De plus, ce code n’atteint
+          jamais le serveur et reste toujours côté client !
+        </div>
+        <div class="txt">
+          Ici, la vulnérabilité est différente par rapport à la précédente, car l’attaque exploite une manipulation non
+          sécurisée du DOM et des propriétés du code côté client.
+          A savoir que l’attaquant peut, comme pour l’attaque précédente, encoder le payload de la requête pour ne pas
+          que ça paraisse trop évident.
+        </div>
+
+        <span>● <u>Stored XSS :</u></span>
+
+        <div class="txt">
+          Pour finir, nous parlerons de la dernière catégorie de vulnérabilité XSS, Stored XSS aussi connue sous le nom
+          de XSS persistant.<br>
+          La spécificité de cette vulnérabilité est plus simple à comprendre et différencier par rapport aux autres.
+          Imaginons un nouveau site non sécurisé qui permet d’écrire des commentaires sur des forums et qui sont
+          sauvegardés dans une base de données.
+        </div>
+        <div class="txt">
+          Le mode opératoire reste toujours plus ou moins le même, vous l’aurez compris. Sur ce forum, un utilisateur
+          rentre le commentaire suivant : <strong>“Super cool ce forum”</strong>. Ce commentaire restera dorénavant
+          affiché sur le forum et sera sauvegardé dans une base de données.
+        </div>
+        <div class="txt">
+          Toujours en partant du principe que le serveur ne fait aucune opération de validation de données, un attaquant
+          pourrait remplacer le simple commentaire en un script javascript malicieux. Ainsi, le commentaire pourra être
+          de la forme suivante :
+        </div>
+
+        <div class="hello" style="margin-top: -0.4rem;">
+          script&gt; Malicious Code &lt;/script&gt;
+        </div>
+
+        <div class="txt">
+          L’avantage de cette technique par rapport aux deux autres est que cette fois-ci, l’attaquant n’a pas besoin
+          d’induire en erreur d’autres utilisateurs en les faisant se connecter à un site web vulnérable avec un url
+          contenant le code javascript.
+          Ici, le code malicieux reste ancré sur le forum et donc chaque utilisateur qui se connecte à ce forum
+          l’exécutera et activera le code malicieux.
+        </div>
+
+        <span></span>
+
+        <h3><u>XSS - Protection contre les failles :</u></h3>
+
+        <p>
+          Afin de se protéger contre les attaques XSS, il est nécessaire d’effectuer des validations de données et
+          encoder les données reçues dans les inputs pour faire en sorte que le navigateur ne reconnaisse pas les
+          données malicieuses comme du code. Il existe plusieurs méthodes pour se défendre contre ces attaques, il est
+          préférable d’en utiliser le plus possible, une seule méthode ne suffit pas pour se protéger des attaques XSS.
+          Il faut savoir qu’elles sont vouées à être complétées, ce ne sont que les bases.
+        </p>
+        <p>
+          Comme nous allons le voir par la suite, les attaquants trouvent toujours un moyen d’esquiver les filtres ou
+          les types d’encodage. Il est donc intéressant de comprendre comment ils les esquivent pour continuer
+          d’améliorer les mécanismes de défense.
+        </p>
+
+        <span>Filtrer :</span>
+
+        <div class="txt">
+          Il est nécessaire de filtrer au maximum les données reçues au niveau des inputs. On peut par exemple imaginer
+          un formulaire d’inscription qui demande identifiant, mot de passe et adresse mail.<br>
+          Pour l’input de l’identifiant, on peut faire en sorte de ne pas accepter les caractères spéciaux tels que
+          <strong>‘&lt;’</strong>
+          ou <strong>'&gt;'</strong> : pour cela, il est possible d’utiliser la fonction php
+          <strong>filter_input()</strong>.<br>
+          Documentation de la fonction: <a href="https://www.php.net/manual/fr/function.filter-input.php"
+            target="_blank">
+            https://www.php.net/manual/fr/function.filter-input.php</a>
+        </div>
+
+        <div class="txt">
+          Pour l’input mot de passe, on peut aussi faire en sorte de ne pas accepter les caractères spéciaux, mais cela
+          peut poser problème pour des personnes qui utilisent des mots de passe à sécurité forte, ainsi il serait
+          préférable d’utiliser une autre méthode que l’on verra par la suite.
+        </div>
+
+        <div class="txt">
+          Pour l’input de l’adresse mail, on peut filtrer à l’aide d’expressions régulières qui empêcheraient à
+          l’attaquant d’écrire des scripts puisque l’expression régulière demande une chaîne de caractères qui
+          ressemble à une adresse mail, c'est-à-dire une suite de lettres qui précède un @, suivi du nom de
+          domaine du mail, <strong>“gmail.com”</strong>, <strong>“orange.fr”</strong>, etc…
+        </div>
+
+        <span>Encoder :</span>
+
+        <div class="txt">
+          Le tableau suivant répertorie les différents types d’encodage que l’on peut retrouver, ces encodages sont à
+          utiliser sur différents éléments selon le type. Ainsi, on peut retrouver un type d’encodage spécifique aux
+          urls, mais aussi de l’encodage du côté javascript ou css.
+        </div>
+
+        <table class="tableau1">
+          <thead>
+            <tr>
+              <th>Type d'encodage</th>
+              <th>Mécanisme d'encodage</th>
+              <th>Fonctions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HTML Entity Encoding</td>
+              <td>
+                Convertit <strong>&</strong> en <strong>&amp;</strong> <br>
+                Convertit <strong>
+                  << /strong> en <strong>&lt;</strong> <br>
+                    Convertit <strong>></strong> en <strong>&gt;</strong> <br>
+                    Convertit <strong>"</strong> en <strong>&quot;</strong> <br>
+                    Convertit <strong>'</strong> en <strong>&#x27;</strong> <br>
+                    Convertit <strong>/</strong> en <strong>&#x2F;</strong> <br>
+              </td>
+              <td>
+                PHP <strong>htmlentities()</strong><br><br>
+                <a href="https://www.w3schools.com/php/func_string_htmlentities.asp"
+                  target="_blank">https://www.w3schools.com/php/func_string_htmlentities.asp</a>
+              </td>
+            </tr>
+            <tr>
+              <td>URL Encoding</td>
+              <td>Encodage avec des pourcentages. Il ne faut encoder que les valeurs des paramètres et pas toutes l’url.
+              </td>
+              <td>
+                PHP <strong>rawurlencode()</strong><br>
+                <a href="https://www.php.net/manual/en/function.rawurlencode.php"
+                  target="_blank">https://www.php.net/manual/en/function.rawurlencode.php</a><br><br>
+                JS <strong>encodeURIComponent()</strong><br>
+                <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/encodeURIComponent "
+                  target="_blank">https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/encodeURIComponent
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>Javascript Encoding</td>
+              <td>Mis à part les caractères alphanumériques, encoder tous les caractères avec le format unicode \uXXXX
+                (X = un entier).</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>CSS Hex Encoding</td>
+              <td>CSS supporte l’encodage avec les formats suivants: \XX and \XXXXXX.</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="txt">
+          Pour les attributs HTML, il faut bien penser à quote (“) les valeurs des attributs pour éviter de faire face à
+          un XSS qui s'exécutera dans un attribut HTML.<br>
+          Des attributs qui ne sont pas quotés peuvent être échappés à l’aide des caractères suivants et ainsi être
+          vulnérable à des attaques XSS : <strong>[space] % * + , - / ; <=> ^ |</strong>.
+        </div>
+
+        <div class="txt">
+          Certains attributs ne sont pas sujet aux failles XSS du fait de leur nature, ainsi pour garder une application
+          web légère et lisible, il n’est pas nécessaire d’appliquer cette méthode sur les attributs suivants :
+        </div>
+
+        <div class="txt" style="font-size: 20px; margin-top: -0.6rem;">
+          <strong>
+            align, alink, alt, bgcolor, border, cellpadding, cellspacing, class, color, cols, colspan, coords, dir,
+            face, height, hspace, ismap, lang, marginheight, marginwidth, multiple, nohref, noresize, noshade, nowrap,
+            ref, rel, rev, rows, rowspan, scrolling, shape, span, summary, tabindex, title, usemap, valign, value,
+            vlink,
+            vspace, width.
+          </strong>
+        </div>
+
+        <span>Utiliser les en-têtes de réponse :</span>
+
+        <div class="txt">
+          L’utilisation des headers Content-Type ou X-Content-Type Options permet de mitiger les attaques XSS en
+          spécifiant de quels types doit être la requête.
+        </div>
+        <div class="txt">
+          L'en-tête <strong>Content-Type</strong> sert à indiquer le type MIME(Ex: text/plain, application/json,
+          image/jpg, etc…) de la ressource.<br>
+          Dans les réponses, une en-tête Content-Type indique au client le type de contenu réellement renvoyé. Il peut
+          arriver que les navigateurs cherchent à détecter le type MIME du contenu en l’inspectant au cas où un
+          attaquant malveillant voudrait envoyer un fichier d’un autre type que celui spécifié.
+          Pour empêcher ce comportement, on peut paramétrer l'en-tête <strong>X-Content-Type-Options</strong> avec la
+          valeur <strong>nosniff</strong>.
+          La valeur nosniff permet de bloquer une requête si la destination de la requête est de type “script” ou “css”.
+        </div>
+
+        <span>Content Security Policy :</span>
+
+        <div class="txt">
+          Une <strong>Content Security Policy (CSP)</strong> ou stratégie de sécurité du contenu permet d'améliorer la
+          sécurité des sites
+          web en permettant de détecter et réduire certains types d'attaques, dont les attaques XSS (Cross Site
+          Scripting) et les injections de contenu. Ces attaques peuvent être utilisées dans divers buts, comme le vol de
+          données, le défacement de site ou la diffusion de malware.
+        </div>
+
+        <div class="txt">
+          CSP permet aux administrateurs système de réduire ou éliminer les moyens de réaliser des attaques XSS en
+          permettant de spécifier les domaines autorisés à fournir des scripts pour la page visitée. Un navigateur
+          compatible avec CSP n'exécute que les scripts provenant d'une origine autorisée par les règles CSP reçues et
+          ignore ceux qui ne sont pas autorisés. On peut ainsi bloquer les domaines non autorisés, les scripts inline
+          (inclus dans une page HTML) ou associés à des événements via les attributs HTML dédiés.
+        </div>
+
+        <div class="txt">
+          Pour un niveau de protection le plus élevé possible, un site qui voudrait qu'aucun script ne puisse être
+          exécuté peut simplement désactiver l'exécution de tout script.
+        </div>
+
+        <div class="txt">
+          Pour activer CSP, il faut configurer le serveur web afin d'ajouter une en-tête (header) HTTP
+          <strong>Content-Security-Policy</strong> aux réponses. Vous pouvez rencontrer des documents qui mentionnent
+          X-Content-Security-Policy comme en-tête, il s'agit d'une version obsolète qu'il n'est plus utile de supporter.
+        </div>
+
+        <div class="txt">
+          Une autre possibilité consiste à utiliser l'élément HTML <strong>&lt;meta&gt;</strong> pour configurer la
+          règle, par exemple :<br>
+          <strong style="text-align: left;">&lt;meta http-equiv="Content-Security-Policy" content="default-src 'self';
+            img-src https://*; child-src 'none';"&gt;</strong>
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Un attaquant à différents moyens de passer à travers les filtres, nous allons voir comment il peut se
+          débrouiller.
+        </div>
+        <div class="txt">
+          Les quelques tests que l’on va voir ci-dessous démontrent qu’il n’est pas possible de rester protéger face aux
+          attaques XSS uniquement en appliquant des filtres sur les inputs.<br>
+          Seules quelques exemples seront données, la liste n’est en aucun point exhaustive, elle a seulement pour
+          intérêt de montrer qu’il existe beaucoup de méthodes pour essayer de passer au-dessus des mécanismes de
+          défenses, et ces méthodes évoluent et sont différentes en fonction de la manière dont est codée l’application
+          web victime. <br>
+          Il faut savoir aussi que les attaques XSS peuvent fonctionner différemment selon les navigateurs utilisés.
+        </div>
+
+        <span style="font-size: 22px;"><u>XSS Locator (Polyglot)</u></span>
+
+        <div class="txt">
+          Le code suivant est un test XSS Polyglot, c’est-à-dire que c’est un code qui peut marcher dans différents
+          environnements, qui possèdent différents mécanismes de protection. C’est une sorte de test ultime et de
+          couteau
+          suisse d'un attaquant :
+        </div>
+
+        <div class="hello" style="margin-top: -0.5rem;">
+          jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */oNcliCk=alert()
+          )//%0D%0A%0d%0a//&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;\x3csVg/&lt;sVg/oNloAd=alert()//&gt;\x3e
+        </div>
+
+        <div class="txt">
+          <strong>jaVasCript</strong> : Un label ECMAScript ou un schéma URI. Le schéma URI définit comment interpréter
+          le reste de
+          l’URL, ici comme étant du code javascript.<br>
+          ECMAScript est un ensemble de normes concernant les langages de programmation de type script et standardisées
+          par Ecma International.<br>
+          Il y a des majuscules pour bypasser les filtres qui sont sensibles à la casse.
+        </div>
+
+        <div class="txt">
+          <strong>/*-/*`/*\`/*'/*"/**/</strong> : un commentaire multi-ligne ECMAScript, ça permet de casser des
+          séquences pour pouvoir injecter du code par la suite.
+        </div>
+
+        <div class="txt">
+          <strong>(/* */oNcliCk=alert() )</strong> : zone d'exécution de codes dans des parenthèses pour invoquer le
+          code
+          à l’intérieur.
+          On y retrouve des majuscules pour les mêmes raisons qu’avant.
+        </div>
+
+        <div class="txt">
+          <strong>//%0D%0A%0d%0a//</strong> : un commentaire sur une ligne en ECMAScript, cela correspond aussi à un
+          double saut de ligne dans l’en-tête des réponses http.
+        </div>
+
+        <div class="txt">
+          <strong>&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;</strong> : utilisé pour casser un élément un
+          élément HTML dans le but d'exécuter du code par la suite sans qu’il soit compris dans cet élément.
+        </div>
+
+        <div class="txt">
+          <strong>\x3csVg/&lt;sVg/oNloAd=alert()//&gt;\x3e</strong> : un élément SVG souvent utilisé pour passer des
+          scripts javascript.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Avec tous les casseurs de séquences, ce code s’échappe des éléments pour pouvoir exécuter le code javascript
+          sans être ennuyé par des filtres.
+        </div>
+
+        <span style="font-size: 22px;"><u>HTML Entities</u></span>
+
+        <div class="txt">
+          Un test qui permet de bypasser l’encodage HTML entity est le suivant :
+          &lt;img src=javascript:alert(&quot;XSS&quot;)&gt;
+        </div>
+
       </div>
     </div>
 
