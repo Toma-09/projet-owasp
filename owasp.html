@@ -2234,7 +2234,7 @@
         </div>
 
         <div class="hello" style="margin-top: -0.4rem;">
-          script&gt; Malicious Code &lt;/script&gt;
+          &lt;script&gt; Malicious Code &lt;/script&gt;
         </div>
 
         <div class="txt">
@@ -2308,17 +2308,16 @@
           <tbody>
             <tr>
               <td>HTML Entity Encoding</td>
-              <td>
-                Convertit <strong>&</strong> en <strong>&amp;</strong> <br>
-                Convertit <strong>
-                  << /strong> en <strong>&lt;</strong> <br>
-                    Convertit <strong>></strong> en <strong>&gt;</strong> <br>
-                    Convertit <strong>"</strong> en <strong>&quot;</strong> <br>
-                    Convertit <strong>'</strong> en <strong>&#x27;</strong> <br>
-                    Convertit <strong>/</strong> en <strong>&#x2F;</strong> <br>
+              <td id="spec">
+                <strong>&</strong> remplace <strong>&amp;</strong> <br>
+                <strong> &lt; </strong> remplace <strong>&lt;</strong> <br>
+                <strong>></strong> remplace <strong>&gt;</strong> <br>
+                <strong>"</strong> remplace <strong>&quot;</strong> <br>
+                <strong>'</strong> remplace <strong>&#x27;</strong> <br>
+                <strong>/</strong> remplace <strong>&#x2F;</strong> <br>
               </td>
               <td>
-                PHP <strong>htmlentities()</strong><br><br>
+                PHP <strong>htmlentities()</strong><br>
                 <a href="https://www.w3schools.com/php/func_string_htmlentities.asp"
                   target="_blank">https://www.w3schools.com/php/func_string_htmlentities.asp</a>
               </td>
@@ -2501,9 +2500,37 @@
 
         <span style="font-size: 22px;"><u>HTML Entities</u></span>
 
+        <div class="txt" id="spec1">
+          Un test qui permet de bypasser l’encodage HTML entity est le suivant :<br>
+          <strong>&lt;img src=javascript:alert(&quot;XSS&quot;)&gt;</strong>
+        </div>
+
+        <span style="font-size: 22px;"><u>Grave Accent Obfuscation</u></span>
+
         <div class="txt">
-          Un test qui permet de bypasser l’encodage HTML entity est le suivant :
-          &lt;img src=javascript:alert(&quot;XSS&quot;)&gt;
+          Il ne faut pas oublier qu’il y a un troisième type de quote qui est l’accent grave <strong>`</strong> , un
+          attaquant aura tendance
+          à essayer avec ce type d’accent car il est souvent oublié dans les filtres.
+        </div>
+
+        <span style="font-size: 22px;"><u>SVG Object Tag</u></span>
+
+        <div class="hello" style="margin-top:0.8rem;">&lt;svg/onload=alert('XSS')&gt;</svg></div>
+
+        <div class="txt">
+          SVG ou Scalable Vector Graphics est un format d’image vectorielle qui supporte l'interactivité et les
+          animations. De plus, un développeur web qui veut faire une animation peut insérer du code javascript dans son
+          image SVG. <br>
+          Donc si le navigateur charge une image SVG avec du code javascript inséré, il sera exécuté, c’est un vecteur
+          d’attaque plutôt commun.
+        </div>
+
+        <span style="font-size: 22px;"><u>STYLE sheet</u></span>
+
+        <div class="txt">
+          Il est également possible d’appeler du code javascript en passant par l’élément d’importation d’une stylesheet
+          css : <br>
+          <strong>&lt;link rel="stylesheet" href="javascript:alert(&quot;XSS&quot;)&gt;"</strong>
         </div>
 
       </div>
@@ -2538,8 +2565,233 @@
       <div class="container-inside">
         <h3>Introduction :</h3>
         <p>
-
+          On imagine souvent que les hackeurs travaillent d’arrache-pied afin de trouver de nouvelles failles te de
+          créer des scripts pour aller les exploiter spécifiquement, et que le moindre nouveau bout de code aura une
+          faille qu’il saura trouver. <br>
+          En réalité, généralement ces personnes s’appuient sur des vulnérabilités connues,
+          dont les failles sont donc connues mais aussi les façons de s’en prémunir, plutôt que de perdre des heures à
+          implémenter un script spécifique à une application web, qui de surcroit risque de ne pas fonctionner sur une
+          autre application (même si elles sont proches en termes de fonctionnement).
         </p>
+        <p>
+          Prenons un exemple pour mieux comprendre cette vulnérabilité : imaginons une application Web basée sur un
+          serveur Apache s’appuyant sur une SBGD Oracle. Pour chaque élément mentionné, il existe malheureusement (et
+          heureusement aussi) des vulnérabilités connues. Malheureusement, car un hackeur peut simplement faire des
+          recherches et trouver facilement un moyen de trouver une faille, mais aussi heureusement, car il existe aussi
+          beaucoup de documentation pour se prémunir d’une faille de ce genre.
+        </p>
+        <p>
+          Ainsi, si un hackeur arrive à trouver le
+          type de serveur contenant les données ainsi que la version, le système devient vulnérable, à moins d’avoir été
+          sécurisé en amont lors de la mise en place de l’application Web.
+        </p>
+
+        <div class="img-p">
+          <img src="img/kv/kv1.JPG" style="width:16rem;">
+        </div>
+
+        <span></span>
+
+        <h3><u>Using Components With Known Vulnerabilities – Attaque / failles</u></h3>
+
+        <span>Frameworks :</span>
+
+        <div class="txt">
+          Les framework, bibliothèques et librairies utilisées dans une application sont, pour la plupart, exécutées
+          avec tous les privilèges. Un hackeur peut simplement utiliser des outils de scan automatisés (détaillés dans
+          la partie sur la protection contre les failles) ou simplement analyser l’application au travers du code source
+          afin de trouver le type de framework utilisé. <br>
+          Si ce framework est connu pour avoir des failles, le hackeur les
+          trouvera lors de recherches sur Internet, et il pourra alors l’exploiter à son avantage.
+        </div>
+
+        <div class="txt">
+          Pour trouver ces frameworks, les hackeurs cherchent principalement des éléments HTML connus, essaient de
+          forcer l’application à renvoyer un certain type d’erreur, ou encore forcent certaines recherches qui ne sont
+          potentiellement pas prévues initialement pour essayer de trouver le nom des dépendances, voir à quelles
+          fonctions font référence les messages d’erreur…
+        </div>
+
+        <span>Components With Full Privileges :</span>
+
+        <div class="txt">
+          Les composants d’une application (fonction, frameworks, APIs, librairies..) sont généralement exécutés via un
+          niveau de privilèges égal à celui de l’application elle-même. Ainsi, s’il existe des faiblesses au sein d’un
+          seul de ces composants, un hackeur pourrait l’utiliser à son avantage.
+        </div>
+        <div class="txt">
+          Par exemple, pour des classes Java, si
+          celles-ci possèdent toutes des héritages entre différentes classes sans abstraction quelconque, trouver une
+          brèche dans n’importe quelle classe peut permettre à un hackeur d’utiliser toutes les autres classes qui en
+          découlent.
+        </div>
+
+        <span>IoT :</span>
+
+        <div class="txt">
+          L’internet des objets (IoT) contient l’ensemble des appareils connectés possédant un système d’exploitation,
+          aussi rudimentaire soit-il. On compte ainsi énormément d’objets différents, allant du frigo et de la machine à
+          pain au téléphone ou la télé intelligente. Ces objets ont une réelle utilité au quotidien en facilitant leur
+          utilisation.
+        </div>
+
+        <div class="txt">
+          Cependant, leur utilité facile et la basse complexité de leurs OS les rend très fragiles : généralement pas
+          sécurisés (car compliqués à sécuriser), il peut être relativement facile de prendre contrôle de tels objets à
+          distance. Le problème étant qu’il existe des outils de scan permettant aux hackeurs de trouver les types
+          d’appareils qui souffrent de certains types d’attaques.
+        </div>
+        <div class="txt">
+          Par exemple, d’après le site OWASP sur cette attaque,
+          l’outil <strong>Shodan IoT search engine</strong> permet à n’importe quel utilisateur de connaître quel type
+          d’appareil est
+          encore vulnérable à l’attaque <strong>Heartbleed</strong>, la localisation dans le monde, etc… Alors que cette
+          faille a été
+          patchée en 2014.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Pour explication, l’attaque Heartbleed est une faille basée sur la librairie <strong>OpenSSL
+            cryptography</strong>, et plus
+          précisément sur l’implémentation du <strong>protocole TLS</strong>, permettant de transporter les paquets de
+          données de façon
+          sécurisée.
+        </div>
+        <div class="txt">
+          Cette faille s’appuie sur l’extension <strong>Heartbeat</strong> (d’où son nom), qui permet de sécuriser le
+          lien
+          entre un client et un serveur en envoyant un Heartbeat Request message, composé d’une <strong>payload</strong>
+          accompagnée d’un
+          nombre entier sur <strong>16bits</strong>. Le problème est que les versions d’Open SSL ayant une vulnérabilité
+          possédaient un
+          <strong>buffer de mémoire</strong>, qui pouvait donc renvoyer un message correspondant à la taille requise par
+          le message
+          entré.
+        </div>
+        <div class="txt">
+          Ainsi, il était possible de faire afficher au serveur ce qui se trouvait dans son buffer en demandant
+          en entrée de retourner une chaîne de caractère très grande.
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Per exemple, si l’utilisateur Paul demande au serveur de lui renvoyer le message de 7 lettres « bonjour » pour
+          savoir s’il fonctionne, dans une utilisation normale, le serveur lui renverra le message de 7 lettres «
+          bonjour ».
+        </div>
+        <div class="txt">
+          Cependant, dans le cas de l’exploitation de la faille, si notre utilisateur Paul demande au serveur de lui
+          renvoyer le message cette fois de 500 lettres « bonjour », le serveur renverre une chaîne de caractères
+          contenant 500 lettres <strong>à partir</strong> du mot « bonjour ».
+        </div>
+        <div class="txt">
+          On pourrait donc se retrouver avec un message du type <strong>«
+            bonjour. L’utilisateur Jacques vient de se connecter via le nom d’utilisateur : jacques1u et le mot de passe
+            :
+            jacques. Mise à jour de l’OS vers la version 1.25.352… »</strong> : l’attaquant peut donc avoir accès à des
+          informations extrêmement sensibles grâce au buffer, et donc à la faille. Il en existe évidemment des milliers
+          d’autres.
+        </div>
+
+        <div class="img-p">
+          <img src="img/kv/kv2.png" style="width:16rem;">
+        </div>
+
+        <span></span>
+
+        <h3><u>Using Components With Known Vulnerabilities – Attaque / failles</u></h3>
+
+        <span>Inventaire / Téléchargement :</span>
+
+        <div class="txt">
+          L'administrateur du site doit faire un inventaire continu du système client-serveur : en faisant un inventaire
+          régulier,
+          il est possible de voir qui s'est connecté, quelles actions ont été entreprises (le tout via les logs). Cela
+          permet
+          de retracer les actions entreprises sur le serveur et de détecter d'éventuelles intrusions.<br>
+          Télécharger des composants provenant de sources et sites sûr(e)s, afin de ne pas être surpris par du code
+          malicieux
+          ou des exécutables corrompus lors de l'installation des différents éléments. Il faut par exemple essayer
+          de télécharger les composants sur des sites disposant de certificats de sécurité (https, ssl...).
+        </div>
+
+        <span>Utilisation de Frameworks :</span>
+
+        <div class="txt">
+          Eviter d’utiliser des frameworks, car ils donnent généralement de base des privilèges extrêmement élevés, ou
+          alors reprendre toutes les classes, les fonctions afin de redéfinir la limite de leur utilisation (abstraction
+          de classes dans Java par exemple, afin de limiter l’action d’un client sur la partie métier d’un service /
+          d’une application).
+        </div>
+
+        <span>Avoir un plan de structuration :</span>
+
+        <div class="txt">
+          Cela signifie que, suivant les services utilisés pour le serveur et la/les base(s) de données, il faut dans un
+          premier temps se renseigner en profondeur sur les différentes brèches qui existent et trouver un moyen de s’en
+          prémunir.
+        </div>
+        <div class="txt">
+          Il faut également pouvoir scanner son application le plus souvent possible, pour pouvoir patcher les
+          éléments pour lesquels une nouvelle faille a été trouvée (soit en interne soit en reprenant des patchs de
+          corrections disponibles sur internet), ou alors reconfigurer certains éléments. Il faut donc effectuer une
+          surveillance régulière.
+        </div>
+
+        <span>Outils de scan :</span>
+
+        <div class="txt">
+          Il existe pléthore d’outils de scan, payants ou non, accessibles sur Internet. Parmi eux, deux sont à noter
+          car
+          ils puisent leurs informations dans les deux plus importantes bases de données de vulnérabilités disponibles
+          (qui seront décrites juste après) :
+        </div>
+
+        <span style="font-size: 22px;"><u>Gemnasium</u></span>
+
+        <div class="txt">
+          Gemnasium est un outil commercial qui utilise sa propre base de données qui prend appui sur plusieurs sources.
+          Cet outil a recours à un algorithme permettant de tester les meilleures combinaisons de dépendances au-lieu de
+          toutes les tester, ce qui permet de faire les scans plus vite et plus efficacement. Cet outil supporte
+          également plusieurs langages (Ruby, NPM (Javascript), PHP, Python et Bower (Javascript)).
+        </div>
+
+        <span style="font-size: 22px;"><u>Dependency-check</u></span>
+
+        <div class="txt">
+          Cet outil en ligne de commande open-source a été créé par OWASP. Bien maintenu, et s’appuyant sur la base de
+          données NIST NVD, il supporte Java, .NET, Javascript et Ruby. Etant open-source, il est donc gratuit.
+        </div>
+
+        <span></span>
+
+        <span>Bases de données de vulnérabilités :</span>
+
+        <div class="txt">
+          Il existe des bases de données reprenant énormément de vulnérabilités existantes, parmi lesquelles la CVE
+          (Common Vulnerabilities and Exploits) et la NVD (National Vulnerability Database).
+        </div>
+
+        <div class="txt">
+          Elles contiennent donc des failles concernant la plupart des logiciels, des serveurs, des services existants.
+          Cela représente une mine d’informations colossale qui permet donc à des personnes souhaitant se défendre
+          contre de potentielles attaques d’avoir des explications, des aides à la solution et des outils pour s’aider.
+        </div>
+
+        <div class="txt">
+          Les deux bases marchent en étroite collaboration : la base CVE permet de trouver une faille via des mots clés
+          ou des ID si connus, afin de filtrer vers la bonne faille, tandis que la NVD, une fois la faille identifiée,
+          donne accès à des outils, des conventions et des solutions à ces problèmes.
+        </div>
+
+        <div class="txt">
+          Lien vers la CVE : <a href="https://cve.mitre.org/" target="_blank">https://cve.mitre.org/</a><br>
+          Lien vers la NVD : <a href="https://nvd.nist.gov/" target="_blank">https://nvd.nist.gov/</a><br>
+        </div>
+
       </div>
     </div>
 
@@ -2560,8 +2812,28 @@
       </div>
     </div>
 
-  </main>
+    <!--
+      Script permettant d'afficher les codes liés aux caractères spéciaux
+    -->
 
+    <script>
+      var divText = document.getElementById('spec').textContent
+      divText = divText.replace('&', '&amp;')
+      divText = divText.replace('<', '&lt;')
+      divText = divText.replace('>', '&gt;')
+      divText = divText.replace('"', '&quot;')
+      divText = divText.replace("'", '&#x27;')
+      divText = divText.replace("/", '&#x2f;')
+      document.getElementById('spec').innerText = divText
+    </script>
+
+    <script>
+      var divText = document.getElementById('spec1').textContent
+      divText = divText.replaceAll('"', '&quot;')
+      document.getElementById('spec1').innerText = divText
+    </script>
+
+  </main>
 </body>
 
 </html>

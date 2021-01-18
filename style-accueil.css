@@ -168,7 +168,8 @@
 /* Footer */
 
 footer {
-  position: absolute;
+  position: fixed;
+  border-collapse: collapse;
   bottom:0;
   left:0;
   right:0;
@@ -223,7 +224,7 @@ footer {
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   bottom: 100%;
   left: 50%;

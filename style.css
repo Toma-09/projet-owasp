@@ -427,6 +427,7 @@
 
   .tableau1 tbody td{
     border-right: 0.09rem solid rgb(207, 207, 207);
+    max-width: 30rem;
   }
 
   .tableau1 tbody td:last-of-type{
