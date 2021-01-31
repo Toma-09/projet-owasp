@@ -147,6 +147,7 @@
       position:relative;
       animation: text1 2s 1;
       background:var(--bg-primary);
+      margin-top:-20px;
   }
 
   .text2 {
@@ -164,10 +165,22 @@
       animation: text3 4s 1;
   }
 
+  .text3 a {
+    transition: all 0.3s ease 0s;
+    font-weight: bolder;
+    animation: text3 4s 1;
+    color:var(--text-primary);
+  }
+
+  .text3 a:hover {
+    color:var(--main-color);
+  }
+
   
 /* Footer */
 
 footer {
+  cursor:default;
   position: fixed;
   border-collapse: collapse;
   bottom:0;

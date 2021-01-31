@@ -321,7 +321,7 @@
             <rect style="fill:currentColor;stroke-width:0.770453" id="rect101-4" width="20.5" height="166.2001" x="189"
               y="171.55003" />
           </svg>
-          <span class="link-text">Cross Scripting XSS</span>
+          <span class="link-text">Cross Site Scripting XSS</span>
         </a>
       </li>
 
@@ -1234,10 +1234,285 @@
         Sensitive data exposure (API et applications web)
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
-
+          Dans un monde où nos données personnelles et celles des entreprises sont stockées, il devient alors essentiel
+          à sécuriser celles dites « sensibles ». Cette notion supplémentaire induit une protection plus importante afin
+          de protéger ces données.
+          Dans une application, nous pouvons répertorier dans un premier temps les outils sensibles qui pourraient
+          engendrer des modifications de comportement, si divulgués à un attaquant :
         </p>
+        <div class="hello1" style="line-height: 2rem;">
+          - Les informations et versions d’OS/Applications/Technologies. <br>
+          - Langages utilisés dans les applications. <br>
+          - Les systèmes et API qui partagent les donnés. <br>
+        </div>
+
+        <span></span>
+
+        <p>
+          En effet, si ces informations sont connues, il devient alors facile pour un attaquant de faire des recherches
+          sur
+          les failles et vulnérabilités existantes, afin de les utiliser contre sa victime. Dans un second temps, il
+          advient de déterminer dans une application ou un système ce qu’est une donnée sensible. Cela peut inclure des
+          informations telles que :
+        </p>
+        <div class="hello1" style="line-height: 2rem;">
+          - Accès et Mots de passe. <br>
+          - Données bancaires, numéros de cartes de crédit… <br>
+          - Données de santé. <br>
+          - Données personnelles. <br>
+          - Secrets professionnels. <br>
+          - …
+        </div>
+
+        <p>
+          De telles pertes d’informations peuvent avoir de nombreuses conséquences pour les acteurs usurpés. Cela peut
+          aller de la perte financière, au vol d’identité, en passant par une perte de confiance des utilisateurs envers
+          une compagnie. Nous allons déterminer les menaces potentielles des données sensibles et comment s’en prévenir.
+        </p>
+
+        <span></span>
+
+        <h3><u>Sensitive Data Exposure - Exploitation des failles </u></h3>
+
+        <span>Données en clair</span>
+
+        <span></span>
+
+        <h5><u>Man-In-The-Middle</u></h5>
+
+        <div class="txt">
+          Il est facile pour un attaquant en utilisant des attaques par Man-In-the-Middle de pouvoir intercepter les
+          communications et ainsi récupérer des identifiants ou données sensibles en clair. Pour cela, rien de plus
+          simple. Nous pouvons commencer par utiliser un logiciel comme Ettercap disponible sous la distribution Kali,
+          ou bien directement le télécharger sur sa machine.
+        </div>
+
+        <div class="txt">
+          Voici un exemple d’attaque ARP Poisoning à utiliser avec Ettercap : <a
+            href="http://www.openmaniak.com/fr/ettercap_arp.php"
+            target="_blank">http://www.openmaniak.com/fr/ettercap_arp.php</a>.
+        </div>
+
+        <div class="txt">
+          Il est ainsi aisé de récupérer les données transitant entre un serveur web et une victime en récupérant toutes
+          les données transitant entre ces deux acteurs.
+        </div>
+
+        <div class="txt">
+          Une fois placé entre le serveur et la victime, l’attaquant peut analyser toutes les données transitant entre
+          eux. Ainsi,
+          si des données confidentielles transitent en clair, l’attaquant n’aura aucun mal à récupérer ces données. Il
+          est fréquent de nos jours de recevoir des mots de passe en clair dans des mails ou encore directement dans les
+          requêtes http. Autant dire que c’est certainement la première menace exposant les données sensibles.
+        </div>
+
+        <span></span>
+
+        <h5><u>Découverte des Versions et Software dans les Headers HTTP</u></h5>
+
+        <div class="txt">
+          Il est possible sur n’importe quelle page web en inspectant les requêtes http d’examiner les headers http, et
+          ainsi découvrir les applications utilisées, les versions… Ces informations peuvent ensuite être utilisées par
+          un attaquant qui n’aura qu’à utiliser un exploit d’une faille connue d’une version d’OS, de logiciel ou autre.
+          <br>Il est possible de le vérifier avec une simple requête wget :
+        </div>
+
+        <div class="hello1">
+          wget --server-response --spider http://example.com/index.php
+        </div>
+
+        <div class="img-p" style="margin-top: 1rem;">
+          <img src="img/sde/sde1.png" style="width:20rem">
+        </div>
+
+        <span></span>
+
+        <div class="txt">
+          Pour cacher les headers http dans les réponses, il est possible de le configurer dans les fichiers de
+          configuration. Par exemple, pour cacher les détails sur un serveur Apache sous Ubuntu/Debian, il est possible
+          de se rendre dans : <br>
+          <strong>/etc/apache2/conf-enabled/security.conf</strong>
+        </div>
+
+        <div class="txt">
+          Il est également possible de cacher le langage de l’application web php dans le fichier :
+          <strong>/etc/php/7.2/apache2/php.ini</strong> et écrire : <strong>expose_php = Off</strong>
+        </div>
+
+        <div class="txt">
+          Ainsi, les versions de l'OS et du langage utilisé n'apparaitront plus, comme le montre la figure ci-dessous :
+        </div>
+
+        <div class="img-p">
+          <img src="img/sde/sde2.png" style="width:20rem">
+        </div>
+
+        <span></span>
+
+        <h4><u>Découverte des ports ouverts avec Nmap</u></h4>
+
+        <div class="txt">
+          De la même manière que précédemment, il est également possible de découvrir les versions des applications des
+          ports ouverts sur un server grâce à l’outil nmap, via la commande : <strong>Nmap -sV -O localhost</strong>
+        </div>
+
+        <div class="txt">
+          Pour éviter cela, il est possible d’utiliser un outil pour bloquer les scans de ports tel que IPTABLES : <br>
+          <a href="https://offensivesecuritygeek.wordpress.com/2014/06/24/how-to-block-port-scans-using-iptables-only/"
+            target="_blank">https://offensivesecuritygeek.wordpress.com/2014/06/24/how-to-block-port-scans-using-iptables-only/</a>
+        </div>
+
+        <span>Chiffrement</span>
+
+        <div class="txt">
+          Le chiffrement est alors nécessaire pour toute données sensibles stockées en base de données ou transitant sur
+          le réseau. <br>
+          Si vous utilisez des algorithmes de hachage tels que MD5 ou SHA1, il est facile de déchiffrer les hash et
+          retrouver les mots de passe. En effet, ces algorithmes sont connus pour être vulnérables aux attaques de
+          collision. C’est-à-dire qu’avec deux entrées différentes, il est possible d’obtenir un hash identique, cela
+          réduit alors la puissance de calcul et le temps nécessaires à la résolution du mot de passe. Un attaquant va
+          alors générer une multitude de hash, qui seront comparés au hash recherché jusqu’à l’obtention de la
+          correspondance.
+        </div>
+
+        <div class="txt">
+          Pour ce faire, l’attaquant peut utiliser plusieurs méthodes, comme le <strong>Bruteforce</strong>,
+          <strong>Dictionnaire</strong> ou par <strong>Rainbow
+            Tables</strong>. Nous prendrons l’exemple de MD5 pour expliquer les différentes menaces.
+        </div>
+
+        <span></span>
+
+        <h5><u>Bruteforce</u></h5>
+
+        <div class="txt">
+          Le but d’un attaque par bruteforce n’est pas de déchiffrer l’empreinte MD5 mais plutôt de chiffrer des
+          milliers de mots
+          jusqu’à trouver la même suite de caractères que le hash initial. <br>
+          Le but est alors de hacher toutes les possibilités existantes jusqu’à ce que l’on retrouve le bon mot de
+          passe. Cette technique est très longue et devient exponentielle voire irréalisable lorsque le mot de
+          passe contient beaucoup de caractères.
+        </div>
+
+        <span></span>
+
+        <h5><u>Dictionnaires</u></h5>
+
+        <div class="txt">
+          Une attaque par dictionnaire consiste à tester une série de mots de passe potentiels, et repose sur le fait
+          que de nombreuses personnes utilisent des mots de passe courants. Elle est généralement utilisée en complément
+          de l’attaque par bruteforce. Cette méthode est moins longue que le bruteforce pur, mais nécessite plus de
+          ressources.
+        </div>
+
+        <span></span>
+
+        <h5><u>Rainbow Tables</u></h5>
+
+        <div class="txt">
+          Cette méthode est la plus efficace pour déchiffrer des mots de passe. Ces tables sont des fichiers contenant
+          des mots de passes et leur valeur de hachage conformément à l’algorithme utilisé. Ce qui rend ces tables très
+          volumineuses, elles peuvent atteindre plusieurs centaines de Gigaoctets en fonction de l’algorithme utilisé
+          (et donc du nombre de collisions). C’est pourquoi les Rainbow Tables utilisent ce qu’on appelle des fonctions
+          de réduction afin d’éviter un encombrement trop important, et donc optimiser les performances lorsque l’on
+          veut déchiffrer un mot de passe. <br>
+          Ces tables sont facilement trouvables sur le web et sont très efficaces contre certains algorithmes de
+          hachage.
+        </div>
+
+        <div class="txt">
+          Un logiciel tel que RainbowCrack utilise les Rainbow Tables afin de déchiffrer rapidement des mots de passe
+          rapidement d’algorithmes de chiffrement non sécurisés comme MD5, SHA1 ou NTLM.
+        </div>
+
+        <div class="img-p">
+          <img src="img/sde/sde3.png" style="width:15rem">
+        </div>
+
+        <span>Transport de données</span>
+
+        <div class="txt">
+          Lors d’échanges de données sensibles, il est souvent conseillé d’utiliser des protocoles sécurisés tels que
+          HTTPS. Ce dernier est la combinaison d’HTTP et d’un protocole de chiffrement comme SSL ou TLS. Le visiteur
+          d’une page web vérifie alors l’identité du site web auquel il accède, grâce à un certificat d’authentification
+          émis par une source tierce fiable, garantissant la confidentialité des échanges entre le serveur et le client.
+          Il est ainsi largement utilisé pour les transactions électroniques et la consultation de données privées
+          sensibles (mails, données de santé …).
+        </div>
+
+        <span></span>
+
+        <h5><u>SSL / TLS Beast</u></h5>
+
+        <div class="txt">
+          Brower Exploit Against SSL/TSL est une attaque exploitant le protocole SSL 3.0 (Secure Sockets Layer), et TLS
+          1.0. <br>
+          Un attaquant préalablement en écoute Man-In-The-Middle est alors capable d’obtenir les tokens
+          d’authentification SSL, qui lui permettent ainsi de déchiffrer les données entre un serveur web et le
+          navigateur
+          de la victime. <br>
+          Ces deux protocoles ont comme point commun l’utilisation d’un chiffrement par blocs, plus particulièrement
+          d’un enchaînement de blocs (Cipher Block Chaining ou CBC). <br>
+          Cette méthode de chiffrement découpe des données en blocs de tailles fixes. On applique ainsi sur chaque bloc
+          un ‘OU exclusif’ avec le chiffrement du bloc précédent avant qu’il soit lui-même chiffré. Un Vecteur
+          d’Initialisation (IV) est généré aléatoirement et utilisé dans le but de rendre chaque message unique.
+        </div>
+
+        <div class="img-p">
+          <img src="img/sde/sde4.png" style="width:25rem">
+        </div>
+
+        <div class="txt" style="margin-top: 1rem;">
+          L’attaquant injecte alors des paquets dans le flux, afin de retrouver l’IV et ainsi comparer les résultats
+          avec le bloc qu’il veut déchiffrer.
+        </div>
+
+        <span></span>
+
+        <h3><u>Sensitive Data Exposure - Exploitation des failles </u></h3>
+
+        <span>Sécurisation des mots de passe</span>
+
+        <div class="txt">
+          - Stocker des mots de passe hashés, ainsi qu’une police unique de mot de passes forts (longueur du mot de
+          passe,
+          incluant des caractères spéciaux, majuscules, nombres …). <br>
+          - Utiliser des fonctions de salage :
+          le salage permet de renforcer la sécurité des informations hachées en y ajoutant une donnée supplémentaire,
+          contre les Rainbow Tables. Exemple : <strong>#crypt ( string $string , string $salt ) : string</strong>
+        </div>
+
+        <span>Chiffrement</span>
+
+        <div class="txt">
+          Afin de chiffrer les données (principalement les mots de passe), il faut utiliser des algorithmes de
+          chiffrement modernes comme Argon2, PBKDF2 ou encore Bcrypt. Attention à ne surtout
+          pas utiliser MD5 ou encore SHA1, qui sont facilement déchiffrables. <br>
+          Il est également possible d'utiliser du chiffrement sur les bases de données, au niveau hardware (SSD
+          chiffrés), sur les fichiers
+          (utiliser Bitlocker), ou encore au niveau applicatif.
+        </div>
+
+        <span>Transport de données</span>
+
+        <div class="txt">
+          L'utilisation de protocoles de sécurité au niveau de la couche transport comme TLS 1.3 lors de transfert de
+          données est vivement recommandée. <br>
+          Utiliser l’entête de réponse HTTP Strict-Transport-Security, permet d’utiliser uniquement de l'HTTPS. Ainsi,
+          toutes les communications, et même les sous domaines, seront utilisés en HTTPS. <br>
+          Voici un exemple de ligne à entrer pour l'enquête de réponse STS : <strong>Strict-Transport-Security:
+            max-age=31536000; includeSubDomains</strong>
+        </div>
+
+        <span>Bonnes pratiques</span>
+
+        <div class="txt" style="line-height: 1.7rem;">
+          - Minimiser le stockage de données sensibles. <br>
+          - Ne pas utiliser de clés de chiffrement par défaut, faibles ou réutilisées. <br>
+          - Scanner les applications web à la recherche de vulnérabilités.
+        </div>
       </div>
     </div>
 
@@ -1251,7 +1526,7 @@
         XML External Entities (XXE)
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           Une attaque XEE pour XML External Entities, parfois appelée attaque par injection XEE, est une vulnérabilité
           touchant les programmes interprétant le langage XML. Elle se caractérise par la possibilité d’extraire des
@@ -1294,10 +1569,10 @@
         <span style="font-size:23px">Un exemple de DTD :</span><br>
 
         <div class="txt">
-          <div class="hello1">
+          <div class="hello1" style="line-height:1.7rem;">
             &lt;?xml version="1.0"?&gt;<br>
           </div>
-          <div class="hello">
+          <div class="hello" style="line-height:1.7rem;">
             &lt;!DOCTYPE librairie [<br>
             &lt;!ELEMENT encyclopedie (personne*)&gt;<br>
             &lt;!ELEMENT personne (nom,prenom,publication+)&gt;<br>
@@ -1311,17 +1586,17 @@
         <div class="txt">
           Ce DTD définit alors la version du document et la structuration des éléments qui vont le composer :
         </div>
-        <div class="txt">
+        <div class="txt" style="line-height:2rem;">
           - Pour chacun des éléments, on définit sa composition par <strong>&lt;!ELEMENT nom_element
-            (structure)&gt;</strong><br>
+            (structure)&gt;</strong>.<br>
           - Pour chacun des attributs, on définit sa composition par <strong>&lt;!ATTLIST nom_element nom_attribut
-            (structure)&gt;</strong><br>
+            (structure)&gt;</strong>.<br>
           - L'attribut sexe de la balise <strong>&lt;personne&gt;</strong> est, ici, défini comme étant un choix imposé
           entre "H" et "F".
           Les valeurs possibles sont séparées par des caractères <strong>'|'</strong>. Cet attribut n'étant pas indiqué
           comme
           obligatoire, s'il n'est pas précisé alors il prendra par défaut la valeur "H" (la valeur précisée entre
-          guillemets après la liste)<br>
+          guillemets après la liste).<br>
           - <strong>personne*</strong> signifie que dans un élément <strong>&lt;encyclopedie&gt;</strong> on peut
           trouver de 0 à plusieurs éléments de type <strong>&lt;personne&gt;</strong> à l'exclusion de tout autre
           élément.<br>
@@ -1339,7 +1614,7 @@
           faisant référence au DTD défini en « externe ».
         </div>
 
-        <div class="txt">
+        <div class="txt" style="line-height:1.7rem;">
           <div class="hello1">
             &lt;?xml version="1.0"?&gt;<br>
             &lt;!DOCTYPE encyclopdie SYSTEM "encyclopedie.dtd" [<br>
@@ -1380,13 +1655,13 @@
           l’application impossible. Regardons un exemple de document XML qui peut être envoyé à la victime :
         </div>
 
-        <div class="txt">
+        <div class="txt" style="line-height:1.7rem;">
           <div class="hello1">
             &lt;?xml version="1.0"?&gt;<br>
           </div>
           <div class="hello">
             &lt;!DOCTYPE lolz [<br>
-            &lt;!ENTITY lol "lol")&gt;<br>
+            &lt;!ENTITY lol "lol"&gt;<br>
             &lt;!ENTITY lol2 "&lol; &lol; &lol; &lol; &lol; &lol; &lol; &lol; &lol; &lol;"&gt;<br>
             &lt;!ENTITY lol3 "&lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2; &lol2;"&gt;<br>
             &lt;!ENTITY lol4 "&lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3; &lol3;"&gt;<br>
@@ -1423,7 +1698,7 @@
           ci-dessous.
         </div>
 
-        <div class="txt">
+        <div class="txt" style="line-height:1.7rem;">
           <div class="hello1">
             &lt;?xml version="1.0"?&gt;<br>
           </div>
@@ -1446,7 +1721,7 @@
           réseau local selon le parseur utilisé par la victime.
         </div>
 
-        <div class="txt">
+        <div class="txt" style="line-height:1.7rem;">
           <div class="hello1">
             &lt;?xml version="1.0"?&gt;<br>
           </div>
@@ -1463,7 +1738,7 @@
 
         <br>
 
-        <div class="txt">
+        <div class="txt" style="line-height:1.7rem;">
           <div class="hello1">
             &lt;?xml version="1.0"?&gt;<br>
           </div>
@@ -1480,7 +1755,7 @@
 
         <br>
 
-        <div class="txt">
+        <div class="txt" style="line-height:1.7rem;">
           <div class="hello1">
             &lt;?xml version="1.0"?&gt;<br>
           </div>
@@ -1510,7 +1785,7 @@
 
         <span>Quand sommes-nous vulnérables ?</span>
 
-        <div class="txt" style="text-align: left;">
+        <div class="txt" style="text-align: left; line-height: 2rem;">
           - Les interpréteurs XML dans l’application acceptent les DTD.<br>
           - Les interpréteurs XML acceptent les entités externes.<br>
           - L’application accepte des modifications XML, notamment de sources externes non identifiées.
@@ -1563,7 +1838,7 @@
 
         <span>Bonnes pratiques :</span>
 
-        <div class="txt" style="text-align: left;">
+        <div class="txt" style="text-align: left; line-height: 2rem;">
           - Patcher/Upgrade les librairies et parseurs XML le plus souvent possible. <br>
           - Limiter la mémoire et les ressources du parseur XML. <br>
           - Vérifier si les entrées XML sont contrôlées avant parsing. <br>
@@ -1584,7 +1859,7 @@
         Broken Access Control
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           Il est tout d’abord nécessaire de comprendre la différence entre les failles Broken Access Control et les
           failles Broken Authentication vues précédemment. Prenons un exemple afin de comprendre ce qui les différencie
@@ -1822,14 +2097,14 @@
           Voici le code en PHP :
         </div>
 
-        <div class="hello1">
+        <div class="hello1" style="line-height:1.7rem;">
           &lt;?php<br>
         </div>
-        <div class="hello">
+        <div class="hello" style="line-height:1.7rem;">
           if (!isset($_SESSION['jeton'])) {<br>
           $_SESSION['jeton'] = bin2hex(openssl_random_pseudo_bytes(6));<br>
         </div>
-        <div class="hello1">
+        <div class="hello1" style="line-height:1.7rem;">
           }<br>
           ?&gt;
         </div>
@@ -1860,7 +2135,7 @@
         Security Misconfiguration
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           La configuration de la sécurité d’un serveur, d’une application web ou n’importe quel élément de type
           client-serveur est un élément fondamental. Si on part du principe que chaque utilisateur est potentiellement
@@ -2015,7 +2290,7 @@
           reprend dans l’ordre les éléments d’attaque qui ont été donnés, il faut donc :
         </p>
 
-        <div class="txt">
+        <div class="txt" style="line-height:2rem;">
           - Changer les comptes / mots de passe par défaut voire les supprimer (via un panel d’administration ou
           directement dans le code suivant le logiciel utilisé).<br>
           - Désactiver les interfaces d’administration, désactiver les ports par défaut pour connexion et en utiliser
@@ -2049,7 +2324,7 @@
         Cross-Site Scripting XSS
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           XSS ou Cross-Site Scripting est une vulnérabilité web qui a pour but d’injecter des scripts javascript par le
           biais d’un formulaire ou dans les requêtes http sur une page web ou sur n’importe quel élément html dans
@@ -2071,11 +2346,15 @@
 
         <span></span>
 
+        <h3><u>XSS - Attaque / failles :</u></h3>
+
         <div class="txt">
           On peut retrouver 3 catégories dans cette attaque qui ont chacune leurs spécificités :
         </div>
 
-        <span>● <u>Reflected XSS :</u></span>
+        <span></span>
+
+        <h4><u>Reflected XSS :</u></h4>
 
         <div class="txt">
           Reflected XSS est la vulnérabilité la plus simple parmi les 3 citées. Elle a lieu lorsqu’un attaquant manipule
@@ -2124,7 +2403,7 @@
 
         <span></span>
 
-        <div class="txt" style="text-align: left;">
+        <div class="txt" style="text-align: left; line-height:2rem">
           Comment trouver cette vulnérabilité ? Plusieurs solutions existent :<br>
           - Tester toutes les zones d’input, il faut tester séparément toutes les zones d’entrées où l’on peut effectuer
           une requête http sur le site web.<br>
@@ -2138,7 +2417,7 @@
           utiles, il n’y a pas qu’un seul moyen d'exécuter des scripts.
         </div>
 
-        <span>● <u>DOM XSS :</u></span>
+        <span><u>DOM XSS :</u></span>
 
         <div class="txt">
           DOM XSS, pour Domain Object Model based XSS, est une attaque XSS qui vise directement le DOM d’un site web en
@@ -2155,19 +2434,19 @@
           Imaginons une page web personnalisée en fonction du nom d’utilisateur, le code de la page web est le suivant :
         </div>
 
-        <div class="hello1">
+        <div class="hello1" style="line-height:1.7rem;">
           &lt;html&gt;<br>
           &lt;head&gt;<br>
           &lt;title&gt;Page personnalisée&lt;/title&gt;<br>
           .......<br>
           &lt;/head&gt;<br>
         </div>
-        <div class="hello">
+        <div class="hello" style="line-height:1.7rem;">
           &lt;script&gt;<br>
           var pos = document.URL.indexOf(“context=”)+8;<br>
           document.write(document.URL.substring(pos,document.URL.length));<br>
         </div>
-        <div class="hello1">
+        <div class="hello1" style="line-height:1.7rem;">
           &lt;/script&gt;<br>
           .......<br>
           &lt;/html&gt;
@@ -2213,7 +2492,9 @@
           que ça paraisse trop évident.
         </div>
 
-        <span>● <u>Stored XSS :</u></span>
+        <span></span>
+
+        <h4><u>Stored XSS :</u></h4>
 
         <div class="txt">
           Pour finir, nous parlerons de la dernière catégorie de vulnérabilité XSS, Stored XSS aussi connue sous le nom
@@ -2456,7 +2737,8 @@
         </div>
 
         <div class="txt">
-          <strong>jaVasCript</strong> : Un label ECMAScript ou un schéma URI. Le schéma URI définit comment interpréter
+          - <strong>jaVasCript</strong> : Un label ECMAScript ou un schéma URI. Le schéma URI définit comment
+          interpréter
           le reste de
           l’URL, ici comme étant du code javascript.<br>
           ECMAScript est un ensemble de normes concernant les langages de programmation de type script et standardisées
@@ -2465,29 +2747,29 @@
         </div>
 
         <div class="txt">
-          <strong>/*-/*`/*\`/*'/*"/**/</strong> : un commentaire multi-ligne ECMAScript, ça permet de casser des
+          - <strong>/*-/*`/*\`/*'/*"/**/</strong> : un commentaire multi-ligne ECMAScript, ça permet de casser des
           séquences pour pouvoir injecter du code par la suite.
         </div>
 
         <div class="txt">
-          <strong>(/* */oNcliCk=alert() )</strong> : zone d'exécution de codes dans des parenthèses pour invoquer le
+          - <strong>(/* */oNcliCk=alert() )</strong> : zone d'exécution de codes dans des parenthèses pour invoquer le
           code
           à l’intérieur.
           On y retrouve des majuscules pour les mêmes raisons qu’avant.
         </div>
 
         <div class="txt">
-          <strong>//%0D%0A%0d%0a//</strong> : un commentaire sur une ligne en ECMAScript, cela correspond aussi à un
+          - <strong>//%0D%0A%0d%0a//</strong> : un commentaire sur une ligne en ECMAScript, cela correspond aussi à un
           double saut de ligne dans l’en-tête des réponses http.
         </div>
 
         <div class="txt">
-          <strong>&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;</strong> : utilisé pour casser un élément un
+          - <strong>&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;</strong> : utilisé pour casser un élément un
           élément HTML dans le but d'exécuter du code par la suite sans qu’il soit compris dans cet élément.
         </div>
 
         <div class="txt">
-          <strong>\x3csVg/&lt;sVg/oNloAd=alert()//&gt;\x3e</strong> : un élément SVG souvent utilisé pour passer des
+          - <strong>\x3csVg/&lt;sVg/oNloAd=alert()//&gt;\x3e</strong> : un élément SVG souvent utilisé pour passer des
           scripts javascript.
         </div>
 
@@ -2502,7 +2784,7 @@
 
         <div class="txt" id="spec1">
           Un test qui permet de bypasser l’encodage HTML entity est le suivant :<br>
-          <strong>&lt;img src=javascript:alert(&quot;XSS&quot;)&gt;</strong>
+          <strong> &lt;img src=javascript:alert(&quot;XSS&quot;)&gt; </strong>
         </div>
 
         <span style="font-size: 22px;"><u>Grave Accent Obfuscation</u></span>
@@ -2546,10 +2828,183 @@
         Insecure Deserialization
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
-
+          Afin de comprendre ce qu'est la désérialisation non sécurisée, nous devons d'abord comprendre ce que sont la
+          sérialisation et la désérialisation.
         </p>
+
+        <span style="font-size: 22px;"><u>Sérialisation</u></span>
+        <div class="txt">
+          La sérialisation désigne le fait d’écrire des données qui persistent sur un disque dur, comme un fichier texte
+          par exemple, ou un fichier JSON, XML, etc…<br>
+          Lors de la sérialisation, un objet est transformé en flux de bytes.
+        </div>
+
+        <span style="font-size: 22px;"><u>Désérialisation</u></span>
+        <div class="txt">
+          La désérialisation est tout simplement l’opposé, c'est-à-dire la transformation des données sérialisées que
+          l’on
+          reçoit sur un flux de données, depuis un fichier ou depuis le réseau, en objet.<br>
+          Lors de la désérialisation, le flux de bytes est transformé en objet.
+        </div>
+        <span></span>
+        <p>
+          Les applications web ainsi que la plupart des langages de programmation utilisent très régulièrement ces
+          principes de sérialisation et désérialisation.
+        </p>
+
+        <div class="img-p">
+          <img src="img/id/id1.png" style="width: 22rem;">
+        </div>
+
+        <span></span>
+
+        <p>
+          On pourrait alors se demander : en quoi cela peut poser un problème ?
+        </p>
+        <p style="margin-top: -1rem;">
+          Concrètement, on transforme un flux de bytes en un objet lu, traité et/ou exécuté par le logiciel.
+          Imaginons qu’un attaquant sérialise du code malicieux. Lors de sa désérialisation, celui-ci sera transformé en
+          objet, et si cet objet possède des méthodes ou fonctions, on comprend tout de suite que l’attaquant peut
+          injecter du code malicieux qui peut être exécuté côté serveur.
+        </p>
+        <p style="margin-top: -1rem;">
+          Une désérialisation non sécurisée à souvent lieu lorsque les programmeurs ne savent pas à quel point la
+          désérialisation de données peut être dangereuse. Généralement, les vulnérabilités liées à la désérialisation
+          mènent à l'exécution code à distance.
+        </p>
+
+        <p>
+          L'exécution de code à distance, ou RCE (Remote Code Execution), est une attaque qui peut avoir des
+          conséquences
+          terribles. Concrètement, l’attaquant ouvre une console sur la machine victime, et il est alors capable de
+          rentrer
+          tout type de commandes et codes qui peuvent être plus ou moins néfastes. Il peut notamment prendre le
+          contrôle de la machine, la détruire en supprimant des fichiers systèmes, ou encore récupérer toutes les
+          données sensibles stockées à l'intérieur.
+        </p>
+
+        <p>
+          C’est pourquoi il est important de comprendre comment utiliser ses principes de manière sûre et sécurisée.
+          Voici à quoi peut ressembler la sérialisation en PHP ci-dessous :
+        </p>
+
+        <div class="txt">
+          Imaginons un objet “User” : <br>
+        </div>
+        <div class="hello1">
+          $user->name = "username"; <br>
+          $user->isLoggedIn = true;
+        </div>
+
+        <br>
+
+        <div class="txt">
+          Cet objet sérialisé deviendra alors:
+        </div>
+        <div class="hello1">
+          O:4:"User":2:{s:4:"name":s:8:"username"; s:10:"isLoggedIn":b:1;}
+        </div>
+
+        <br>
+
+        <div class="txt" style="line-height: 2rem;">
+          Cela peut être interprété de la manière suivante : <br>
+          - <strong>O:4:"User"</strong> - Un objet avec un nom de classe "User" de taille 4 caractères. <br>
+          - <strong>2</strong> - L’objet possède deux attributs. <br>
+          - <strong>s:4:"name"</strong> - La clé du premier attribut est de taille 4 caractères et est nommé “name”.
+          <br>
+          - <strong>s:8:"username"</strong> - La valeur du premier attribut est de taille 8 caractères et est nommée
+          “carlos”. <br>
+          - <strong>s:10:"isLoggedIn"</strong> - La clé du second attribut est de taille 10 caractères et est nommé
+          “isLoggedIn”. <br>
+          - <strong>b:1</strong> - La valeur du second attribut est un booléen de valeur true. <br>
+        </div>
+        <div class="txt">
+          En PHP il existe des fonctions pour sérialiser et désérialiser des données qui sont respectivement serialize()
+          et unserialize().
+        </div>
+
+        <span></span>
+
+        <h3><u>Insecure Deserialization – Attaque / failles</u></h3>
+
+        <span>Modification de cookies :</span>
+
+        <div class="txt">
+          Prenons un exemple très simple, imaginons un blog ou un forum qui ne possède pas de protection contre les
+          vulnérabilité de type Insecure Deserialization , sur ce forum il y a un cookie qui stocke des données pour
+          chaque utilisateur.
+        </div>
+
+        <div class="txt">
+          Prenons le cookie d’Alice qui peut alors être structuré de la manière suivante : <br>
+          Structure cookie : <strong>user : role</strong> <br>
+          Cookie Alice : <strong>wonderAlice : user</strong> <br>
+        </div>
+
+        <div class="txt">
+          Lorsque Alice se connecte sur la page du forum, le cookie qui est un objet, se sérialise : il se transforme
+          donc en un flux de bytes et est envoyé au serveur.
+        </div>
+
+        <div class="txt">
+          Le serveur reçoit ce flux de données et le désérialise pour comprendre à qui appartient ce cookie et ainsi
+          exécuter telle ou telle fonction pour afficher la page d’Alice.
+        </div>
+
+        <div class="txt">
+          Imaginons maintenant que quelqu’un de malicieux, comme Adam, trouve la possibilité de modifier ce cookie
+          et qu'il le modifie pour qu’il soit le suivant : <br>
+          <strong>Ad4m : admin</strong>
+        </div>
+
+        <div class="txt">
+          Les opérations de sérialisation et désérialisation sont les mêmes qu’auparavant mais cette fois-ci le serveur
+          va exécuter ses fonctions comme il devrait le faire lorsqu’un admin se connecte étant donné que le rôle dans
+          le cookie était “admin” et non pas “user”, il va alors renvoyer à Adam la page admin du forum.
+        </div>
+
+        <span></span>
+
+        <h3><u>Insecure Deserialization – Protection contre les failles</u></h3>
+
+        <span>Test d'intégrité :</span>
+
+        <div class="txt">
+          Dans un premier temps, il est possible d’intégrer un test d’intégrité dans l’objet qui sera désérialisé comme
+          une signature digitale, un hash par exemple.
+        </div>
+
+        <span>Isoler le code :</span>
+
+        <div class="txt">
+          Du côté serveur, il est préférable d’isoler et d'exécuter le code qui est désérialisé dans un environnement
+          avec des privilèges moindres.
+        </div>
+
+        <span>Logging d'erreurs pour la déserialisation :</span>
+
+        <div class="txt">
+          Implémenter des fonctions de logging d’erreur lors de désérialisation afin de référencer ce qui pourrait être
+          des tentatives d’exploitation.
+        </div>
+
+        <span>WAF (Web Application Firewall) :</span>
+
+        <div class="txt">
+          Il est également possible d’utiliser des WAF (Web application Firewall) afin de filtrer les flux de données
+          qui pourraient être des exploitations de désérialisation non sécurisées.
+        </div>
+
+        <span>Test et validation :</span>
+
+        <div class="txt">
+          Enfin, une bonne pratique est toujours d'effectuer des tests et valider les données que l’on reçoit dans
+          l’utilisateur.
+        </div>
+
       </div>
     </div>
 
@@ -2563,7 +3018,7 @@
         Using Components With Known Vulnerabilities
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
           On imagine souvent que les hackeurs travaillent d’arrache-pied afin de trouver de nouvelles failles te de
           créer des scripts pour aller les exploiter spécifiquement, et que le moindre nouveau bout de code aura une
@@ -2702,7 +3157,7 @@
 
         <span></span>
 
-        <h3><u>Using Components With Known Vulnerabilities – Attaque / failles</u></h3>
+        <h3><u>Using Components With Known Vulnerabilities – Protection contre les failles</u></h3>
 
         <span>Inventaire / Téléchargement :</span>
 
@@ -2805,7 +3260,7 @@
         Insufficient Logging & Monitoring
       </div>
       <div class="container-inside">
-        <h3>Introduction :</h3>
+        <h3><u>Introduction :</u></h3>
         <p>
 
         </p>

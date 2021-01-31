@@ -333,7 +333,7 @@
 
   .container .container-inside .txt a:hover,
   .container .container-inside p a:hover{
-    color:var(--text-primary);
+    color:var(--main-color);
   }
 
   .hello{
