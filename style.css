@@ -465,3 +465,7 @@
   strong{
     cursor: default;
   }
+
+  h3{
+    text-align: left;
+  }
