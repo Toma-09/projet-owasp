@@ -204,7 +204,7 @@
   .tableau {
     border-collapse: collapse;
     font-size: 0.9em;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     margin:2rem auto 2rem auto;
